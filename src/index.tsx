@@ -4,6 +4,7 @@ import './index.css'
 import { render } from 'solid-js/web'
 
 import App from './app'
+import { ThemeProvider } from './design/theme-provider'
 
 const root = document.getElementById('root')
 
@@ -13,4 +14,11 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   )
 }
 
-render(() => <App />, root as HTMLElement)
+render(
+  () => (
+    <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+      <App />
+    </ThemeProvider>
+  ),
+  root as HTMLElement
+)

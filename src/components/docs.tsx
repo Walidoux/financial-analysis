@@ -1,13 +1,13 @@
 import { useLocation } from '@solidjs/router'
 import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
+import remarkMath from 'remark-math'
 import type { Component } from 'solid-js'
 import { createResource, Show } from 'solid-js'
 import { SolidMarkdown } from 'solid-markdown'
 import { Typography as CustomTypography } from '../design/custom-typography'
 import { Typography as BaseTypography } from './base-typography'
 
-// Pre-import all docs using Vite's import.meta.glob
 const docsModules = import.meta.glob('../../docs/**/*.{md,mdx}', {
   as: 'raw',
   eager: false,
@@ -19,17 +19,13 @@ const Docs: Component = () => {
   const path = () => location.pathname.replace('/docs/', '') || ''
 
   const loadContent = async (docPath: string) => {
-    if (!docPath) {
-      return ''
-    }
+    if (!docPath) return ''
+
     try {
-      // Try .mdx first, then .md
-      let modulePath = `../../docs/${docPath}.mdx`
-      let module = docsModules[modulePath]
-      if (!module) {
-        modulePath = `../../docs/${docPath}.md`
-        module = docsModules[modulePath]
-      }
+      const modulePath = (ext: string) => `../../docs/${docPath}.${ext}`
+      const module =
+        docsModules[modulePath('mdx')] || docsModules[modulePath('md')]
+
       if (module) {
         const content = await module()
         return content
@@ -44,12 +40,14 @@ const Docs: Component = () => {
   const [markdownContent] = createResource(path, loadContent)
 
   return (
-    <div class='max-w-3xl p-8'>
+    <div class='mx-auto max-w-3xl p-8'>
       <Show fallback={<div>Loading...</div>} when={!markdownContent.loading}>
         <SolidMarkdown
           children={markdownContent() || ''}
           components={{ ...BaseTypography, ...CustomTypography }}
           rehypePlugins={[rehypeRaw, rehypeKatex]}
+          remarkPlugins={[remarkMath]}
+          renderingStrategy='reconcile'
         />
       </Show>
     </div>

@@ -1,11 +1,14 @@
 import type { JSXElement, ParentProps } from 'solid-js'
 import { cn } from '~/lib/utils'
+import { EBITDA as ebitda } from './ebitda'
 
 type CustomSourceProps<T = unknown> = (
   props: ParentProps<{ className?: string; href?: string } & T>
 ) => JSXElement
 
 export const Typography: Record<string, CustomSourceProps> = {
+  ebitda,
+
   Lead(props) {
     return (
       <p class={cn('text-muted-foreground text-xl', props.className)}>

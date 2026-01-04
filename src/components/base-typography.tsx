@@ -1,3 +1,4 @@
+import { For } from 'solid-js'
 import type { SolidMarkdownOptions } from 'solid-markdown'
 import { cn } from '~/lib/utils'
 
@@ -30,7 +31,7 @@ export const Typography: SolidMarkdownOptions['components'] = {
     return (
       <h3
         class={cn(
-          'scroll-m-20 font-semibold text-2xl tracking-tight',
+          'mt-6 scroll-m-20 font-semibold text-2xl tracking-tight',
           props.class
         )}>
         {props.children}
@@ -42,7 +43,7 @@ export const Typography: SolidMarkdownOptions['components'] = {
     return (
       <h4
         class={cn(
-          'scroll-m-20 font-semibold text-xl tracking-tight',
+          'mt-4 scroll-m-20 font-semibold text-xl tracking-tight',
           props.class
         )}>
         {props.children}
@@ -67,44 +68,40 @@ export const Typography: SolidMarkdownOptions['components'] = {
   },
 
   table(props) {
+    if (
+      !props.data.rows.every((row) => row.length === props.data.headers.length)
+    ) {
+      return 'Error: Headers size should match the each row size'
+    }
+
     return (
       <div class={cn('my-6 w-full overflow-y-auto', props.class)}>
         <table class='w-full'>
           <thead>
             <tr class='m-0 border-t p-0 even:bg-muted'>
-              <th class='border px-4 py-2 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right'>
-                King&apos;s Treasury
-              </th>
-              <th class='border px-4 py-2 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right'>
-                People&apos;s happiness
-              </th>
+              <For each={props.data.headers}>
+                {(header) => (
+                  <th class='border px-4 py-2 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right'>
+                    {header}
+                  </th>
+                )}
+              </For>
             </tr>
           </thead>
           <tbody>
-            <tr class='m-0 border-t p-0 even:bg-muted'>
-              <td class='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'>
-                Empty
-              </td>
-              <td class='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'>
-                Overflowing
-              </td>
-            </tr>
-            <tr class='m-0 border-t p-0 even:bg-muted'>
-              <td class='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'>
-                Modest
-              </td>
-              <td class='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'>
-                Satisfied
-              </td>
-            </tr>
-            <tr class='m-0 border-t p-0 even:bg-muted'>
-              <td class='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'>
-                Full
-              </td>
-              <td class='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'>
-                Ecstatic
-              </td>
-            </tr>
+            <For each={props.data.rows}>
+              {(row) => (
+                <tr class='m-0 border-t p-0 even:bg-muted'>
+                  <For each={row}>
+                    {(cell) => (
+                      <td class='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'>
+                        {cell}
+                      </td>
+                    )}
+                  </For>
+                </tr>
+              )}
+            </For>
           </tbody>
         </table>
       </div>
