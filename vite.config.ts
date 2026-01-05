@@ -12,7 +12,8 @@ export default defineConfig({
     port: 3000,
   },
   optimizeDeps: {
-    include: ['debug', 'extend']  },
+    include: ['debug', 'extend'],
+  },
   resolve: {
     alias: {
       '~': resolve(import.meta.dirname, './src'),

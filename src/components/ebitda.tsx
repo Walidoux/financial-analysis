@@ -1,4 +1,4 @@
-import { Typography } from "./base-typography"
+import { Typography } from './base-typography'
 
 export const EBITDA = () => {
   const data = {
