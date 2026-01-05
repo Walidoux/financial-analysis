@@ -3,11 +3,22 @@ import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import remarkMath from 'remark-math'
 import type { Component } from 'solid-js'
-import { createResource, Show } from 'solid-js'
+import {
+  createEffect,
+  createMemo,
+  createResource,
+  createSignal,
+  For,
+  onCleanup,
+  onMount,
+  Show,
+} from 'solid-js'
 import { SolidMarkdown } from 'solid-markdown'
+import { cn } from '~/lib/utils'
 import pkg from '../../package.json'
 import { Typography as BaseTypography } from './base-typography'
 import { Typography as CustomTypography } from './custom-typography'
+import { Spinner } from './ui/spinner'
 
 const BASE_REGEX = new RegExp(`^/?${pkg.name}/?`)
 const DOCS_REGEX = /^\/?docs\/?/
@@ -19,6 +30,7 @@ const docsModules = import.meta.glob('../../docs/**/*.{md,mdx}', {
 
 const Docs: Component = () => {
   const location = useLocation()
+  const [windowHeight, setWindowHeight] = createSignal(window.innerHeight)
 
   const path = () =>
     location.pathname.replace(BASE_REGEX, '').replace(DOCS_REGEX, '') || ''
@@ -63,19 +75,149 @@ const Docs: Component = () => {
   }
 
   const [markdownContent] = createResource(path, loadContent)
+  let hiddenContainerRef: HTMLDivElement | undefined
+  const [totalHeight, setTotalHeight] = createSignal(0)
+  const [shouldSplit, setShouldSplit] = createSignal(false)
+
+  function splitMarkdownByHeight(content: string): [string, string, string] {
+    if (!content) {
+      return ['', '', '']
+    }
+
+    // Parse markdown to get structure
+    const lines = content.split('\n')
+    console.log(lines)
+    const paragraphs: string[] = []
+    let currentParagraph = ''
+
+    // Group into paragraphs (better than splitting by lines)
+    for (const line of lines) {
+      if (line.trim() === '' && currentParagraph.trim() !== '') {
+        paragraphs.push(currentParagraph)
+        currentParagraph = ''
+      } else {
+        currentParagraph += `${line}\n`
+      }
+    }
+    if (currentParagraph.trim() !== '') {
+      paragraphs.push(currentParagraph)
+    }
+
+    // Calculate approximate height per paragraph
+    const avgParagraphHeight = totalHeight() / paragraphs.length
+    const targetHeight = totalHeight() / 3 // 780 px
+    console.log(targetHeight, window.devicePixelRatio)
+
+    // Split into three parts based on target height
+    const part1: string[] = []
+    const part2: string[] = []
+    const part3: string[] = []
+    let currentHeight = 0
+    let currentPart = 1
+
+    for (const paragraph of paragraphs) {
+      const paragraphHeight = avgParagraphHeight
+
+      if (currentPart === 1) {
+        part1.push(paragraph)
+        currentHeight += paragraphHeight
+        if (currentHeight >= targetHeight) {
+          // 90% of target
+          currentPart = 2
+          currentHeight = 0
+        }
+      } else if (currentPart === 2) {
+        part2.push(paragraph)
+        currentHeight += paragraphHeight
+        if (currentHeight >= targetHeight) {
+          currentPart = 3
+        }
+      } else {
+        part3.push(paragraph)
+      }
+    }
+
+    return [part1.join('\n\n'), part2.join('\n\n'), part3.join('\n\n')]
+  }
+
+  const renderMarkdown = (content: string) => (
+    <SolidMarkdown
+      children={content}
+      components={{ ...BaseTypography, ...CustomTypography }}
+      rehypePlugins={[rehypeRaw, rehypeKatex]}
+      remarkPlugins={[remarkMath]}
+      renderingStrategy='reconcile'
+    />
+  )
+
+  const contentParts = createMemo(() => {
+    if (markdownContent() && shouldSplit()) {
+      return splitMarkdownByHeight(markdownContent() || '')
+    }
+    return [markdownContent() || '', '', '']
+  })
+
+  onMount(() => {
+    const handleResize = () => setWindowHeight(window.innerHeight)
+    window.addEventListener('resize', handleResize)
+    onCleanup(() => window.removeEventListener('resize', handleResize))
+  })
+
+  createEffect(() => {
+    if (hiddenContainerRef && markdownContent() && !markdownContent.loading) {
+      requestAnimationFrame(() => {
+        // Split if content is taller than 60% of viewport
+        const height = hiddenContainerRef.scrollHeight
+        setTotalHeight(height)
+        setShouldSplit(height > windowHeight() * 0.6)
+      })
+    }
+  })
 
   return (
-    <div class='mx-auto max-w-3xl p-8'>
-      <Show fallback={<div>Loading...</div>} when={!markdownContent.loading}>
-        <SolidMarkdown
-          children={markdownContent() || ''}
-          components={{ ...BaseTypography, ...CustomTypography }}
-          rehypePlugins={[rehypeRaw, rehypeKatex]}
-          remarkPlugins={[remarkMath]}
-          renderingStrategy='reconcile'
-        />
+    <>
+      {/* measurement container */}
+      <div
+        class='invisible absolute overflow-hidden'
+        ref={hiddenContainerRef}
+        style={{
+          width: 'calc(min(100vw - 64px, 672px))', // equivalent to max-w-3xl + padding
+          top: '-9999px',
+        }}>
+        <Show when={!markdownContent.loading && markdownContent()}>
+          {renderMarkdown(markdownContent() || '')}
+        </Show>
+      </div>
+
+      <Show
+        fallback={
+          <main class='grid h-screen max-w-screen place-items-center'>
+            <Spinner />
+          </main>
+        }
+        when={!markdownContent.loading}>
+        <Show
+          fallback={
+            <article class='mx-auto max-w-3xl p-8'>
+              {renderMarkdown(markdownContent() || '')}
+            </article>
+          }
+          when={shouldSplit()}>
+          <section class='mx-auto grid h-full grid-cols-1 gap-0 md:grid-cols-3'>
+            <For each={contentParts()}>
+              {(part, index) => (
+                <article
+                  class={cn('flex min-h-0 flex-1 overflow-y-auto p-8', {
+                    'border-foreground/25 border-l': index() > 0,
+                  })}>
+                  {renderMarkdown(part)}
+                </article>
+              )}
+            </For>
+          </section>
+        </Show>
       </Show>
-    </div>
+    </>
   )
 }
 

@@ -136,10 +136,10 @@ try {
 
 ### Path Aliases
 - `~/*` → `./src/*` (TypeScript path mapping)
-- `@/*` → `./src/*` (shadcn/ui alias)
-- `@/components/*` → `./src/components/*`
-- `@/lib/*` → `./src/lib/*`
-- `@/hooks/*` → `./src/hooks/*`
+- `~/*` → `./src/*` (shadcn/ui alias)
+- `~/components/*` → `./src/components/*`
+- `~/lib/*` → `./src/lib/*`
+- `~/hooks/*` → `./src/hooks/*`
 
 ### Formatting Rules (Biome)
 - **Quotes**: Single quotes for strings and JSX

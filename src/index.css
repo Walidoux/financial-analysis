@@ -119,8 +119,8 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply font-sans bg-background text-foreground overflow-hidden;
+  #root {
+    @apply font-sans bg-background text-foreground overflow-hidden h-screen max-w-screen;
   }
   html {
     @apply font-sans;
