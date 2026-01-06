@@ -3,6 +3,7 @@ import type { RouteSectionProps } from '@solidjs/router'
 import type { Component } from 'solid-js'
 import { createEffect, createSignal } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import { APP_NAME } from '~/app'
 
 export default function Subpage(props: RouteSectionProps) {
   const [MDXComp, setMDXComp] = createSignal<Component>()
@@ -15,7 +16,9 @@ export default function Subpage(props: RouteSectionProps) {
 
   return (
     <>
-      <Title>{props.params.subpage} | Finance Career</Title>
+      <Title>
+        {props.params.subpage} | {APP_NAME}
+      </Title>
       <Meta
         content='Collection of beautiful UI components for SolidJS that work with Tailwind and PandaCSS, an unofficial port of magic ui to solidjs.'
         name='description'

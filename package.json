@@ -1,7 +1,7 @@
 {
-  "name": "financial-analysis",
+  "name": "fintech-academy",
   "private": true,
-  "homepage": "https://walidoux.github.io/financial-analysis",
+  "homepage": "https://walidoux.github.io/fintech-academy",
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",

@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "financial-analysis",
+      "name": "fintech-academy",
       "dependencies": {
         "@corvu/resizable": "^0.2.5",
         "@fontsource-variable/raleway": "^5.2.8",

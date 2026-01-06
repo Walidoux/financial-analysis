@@ -4,6 +4,7 @@ import { allPages } from 'content-collections'
 import type { Component } from 'solid-js'
 import { createEffect, createSignal, For } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import { APP_NAME } from '~/app'
 import { Card, CardContent } from '~/components/ui/card'
 
 export default function EsePage(props: RouteSectionProps) {
@@ -22,19 +23,17 @@ export default function EsePage(props: RouteSectionProps) {
       .sort((a, b) => a.title.localeCompare(b.title))
 
   createEffect(() => {
-    const ese = props.params.ese
-    import(`~/content/pages/${ese}/index.mdx`).then((mod) =>
+    import(`~/content/pages/${props.params.ese}/index.mdx`).then((mod) =>
       setMDXComp(() => mod.default)
     )
   })
 
   return (
     <>
-      <Title>{props.params.ese} | Finance Career</Title>
-      <Meta
-        content='Collection of beautiful UI components for SolidJS that work with Tailwind and PandaCSS, an unofficial port of magic ui to solidjs.'
-        name='description'
-      />
+      <Title>
+        {props.params.ese} | {APP_NAME}
+      </Title>
+      <Meta content={''} name='description' />
       <Dynamic component={MDXComp()} />
       <ul class='mt-6 grid grid-cols-3 gap-3'>
         <For each={subPages()}>
