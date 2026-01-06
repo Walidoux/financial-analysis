@@ -1,5 +1,3 @@
-import 'katex/dist/katex.min.css'
-
 import { Meta, Title } from '@solidjs/meta'
 import type { RouteSectionProps } from '@solidjs/router'
 import type { Component } from 'solid-js'
@@ -10,9 +8,7 @@ export default function Subpage(props: RouteSectionProps) {
   const [MDXComp, setMDXComp] = createSignal<Component>()
 
   createEffect(() => {
-    const ese = props.params.ese
-    const subpage = props.params.subpage
-    import(`~/content/pages/${ese}/${subpage}.mdx`).then((mod) =>
+    import(`~/content/pages/${props.params.ese}/${props.params.subpage}.mdx?raw`).then((mod) =>
       setMDXComp(() => mod.default)
     )
   })

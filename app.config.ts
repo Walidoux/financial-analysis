@@ -22,7 +22,7 @@ export default defineConfig({
         jsxImportSource: 'solid-js',
         providerImportSource: '~/tools/solid-mdx',
         remarkPlugins: [remarkFrontmatter, remarkMath],
-        rehypePlugins: [rehypekatex],
+        rehypePlugins: [[rehypekatex, { throwOnError: false, output: 'html' }]],
       }),
     ],
   },

@@ -51,9 +51,7 @@ export const Typography = {
 
   p(props) {
     return (
-      <p class={cn('not-first:mt-6 text-justify leading-7', props.class)}>
-        {props.children}
-      </p>
+      <p {...props} />
     )
   },
 
