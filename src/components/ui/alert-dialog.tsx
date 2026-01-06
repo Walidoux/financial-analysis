@@ -1,175 +1,151 @@
-"use client"
+import type {
+  AlertDialogCloseButtonProps,
+  AlertDialogContentProps,
+  AlertDialogDescriptionProps,
+  AlertDialogTitleProps,
+} from '@kobalte/core/alert-dialog'
+import { AlertDialog as AlertDialogPrimitive } from '@kobalte/core/alert-dialog'
+import type { PolymorphicProps } from '@kobalte/core/polymorphic'
+import type { ComponentProps, ParentProps, ValidComponent } from 'solid-js'
+import { splitProps } from 'solid-js'
+import { cn } from '~/lib/utils'
+import { buttonVariants } from './button'
 
-import * as React from "react"
-import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog"
+export const AlertDialog = AlertDialogPrimitive
+export const AlertDialogTrigger = AlertDialogPrimitive.Trigger
 
-import { cn } from "~/lib/utils"
-import { Button } from "@/components/ui/button"
+type alertDialogContentProps<T extends ValidComponent = 'div'> = ParentProps<
+  AlertDialogContentProps<T> & {
+    class?: string
+  }
+>
 
-function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
-  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
-}
+export const AlertDialogContent = <T extends ValidComponent = 'div'>(
+  props: PolymorphicProps<T, alertDialogContentProps<T>>
+) => {
+  const [local, rest] = splitProps(props as alertDialogContentProps, [
+    'class',
+    'children',
+  ])
 
-function AlertDialogTrigger({ ...props }: AlertDialogPrimitive.Trigger.Props) {
   return (
-    <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
-  )
-}
-
-function AlertDialogPortal({ ...props }: AlertDialogPrimitive.Portal.Props) {
-  return (
-    <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
-  )
-}
-
-function AlertDialogOverlay({
-  className,
-  ...props
-}: AlertDialogPrimitive.Backdrop.Props) {
-  return (
-    <AlertDialogPrimitive.Backdrop
-      data-slot="alert-dialog-overlay"
-      className={cn(
-        "data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs fixed inset-0 isolate z-50",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogContent({
-  className,
-  size = "default",
-  ...props
-}: AlertDialogPrimitive.Popup.Props & {
-  size?: "default" | "sm"
-}) {
-  return (
-    <AlertDialogPortal>
-      <AlertDialogOverlay />
-      <AlertDialogPrimitive.Popup
-        data-slot="alert-dialog-content"
-        data-size={size}
-        className={cn(
-          "data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 bg-background ring-foreground/10 gap-4 rounded-none p-4 ring-1 duration-100 data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-sm group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 outline-none",
-          className
+    <AlertDialogPrimitive.Portal>
+      <AlertDialogPrimitive.Overlay
+        class={cn(
+          'data-closed:fade-out-0 data-expanded:fade-in-0 fixed inset-0 z-50 bg-background/80 data-closed:animate-out data-expanded:animate-in'
         )}
-        {...props}
       />
-    </AlertDialogPortal>
+      <AlertDialogPrimitive.Content
+        class={cn(
+          'data-closed:fade-out-0 data-expanded:fade-in-0 data-closed:zoom-out-95 data-expanded:zoom-in-95 data-closed:slide-out-to-left-1/2 data-closed:slide-out-to-top-[48%] data-expanded:slide-in-from-left-1/2 data-expanded:slide-in-from-top-[48%] fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg data-closed:animate-out data-expanded:animate-in data-closed:duration-200 data-expanded:duration-200 sm:rounded-lg md:w-full',
+          local.class
+        )}
+        {...rest}>
+        {local.children}
+      </AlertDialogPrimitive.Content>
+    </AlertDialogPrimitive.Portal>
   )
 }
 
-function AlertDialogHeader({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-dialog-header"
-      className={cn("grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]", className)}
-      {...props}
-    />
-  )
-}
+export const AlertDialogHeader = (props: ComponentProps<'div'>) => {
+  const [local, rest] = splitProps(props, ['class'])
 
-function AlertDialogFooter({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="alert-dialog-footer"
-      className={cn(
-        "flex flex-col-reverse gap-2 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end",
-        className
+      class={cn(
+        'flex flex-col space-y-2 text-center sm:text-left',
+        local.class
       )}
-      {...props}
+      {...rest}
     />
   )
 }
 
-function AlertDialogMedia({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export const AlertDialogFooter = (props: ComponentProps<'div'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
   return (
     <div
-      data-slot="alert-dialog-media"
-      className={cn("bg-muted mb-2 inline-flex size-10 items-center justify-center rounded-none sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6", className)}
-      {...props}
+      class={cn(
+        'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
+        local.class
+      )}
+      {...rest}
     />
   )
 }
 
-function AlertDialogTitle({
-  className,
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
+type alertDialogTitleProps<T extends ValidComponent = 'h2'> =
+  AlertDialogTitleProps<T> & {
+    class?: string
+  }
+
+export const AlertDialogTitle = <T extends ValidComponent = 'h2'>(
+  props: PolymorphicProps<T, alertDialogTitleProps<T>>
+) => {
+  const [local, rest] = splitProps(props as alertDialogTitleProps, ['class'])
+
   return (
     <AlertDialogPrimitive.Title
-      data-slot="alert-dialog-title"
-      className={cn("text-sm font-medium sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2", className)}
-      {...props}
+      class={cn('font-semibold text-lg', local.class)}
+      {...rest}
     />
   )
 }
 
-function AlertDialogDescription({
-  className,
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {
+type alertDialogDescriptionProps<T extends ValidComponent = 'p'> =
+  AlertDialogDescriptionProps<T> & {
+    class?: string
+  }
+
+export const AlertDialogDescription = <T extends ValidComponent = 'p'>(
+  props: PolymorphicProps<T, alertDialogDescriptionProps<T>>
+) => {
+  const [local, rest] = splitProps(props as alertDialogDescriptionProps, [
+    'class',
+  ])
+
   return (
     <AlertDialogPrimitive.Description
-      data-slot="alert-dialog-description"
-      className={cn("text-muted-foreground *:[a]:hover:text-foreground text-xs/relaxed text-balance md:text-pretty *:[a]:underline *:[a]:underline-offset-3", className)}
-      {...props}
+      class={cn('text-muted-foreground text-sm', local.class)}
+      {...rest}
     />
   )
 }
 
-function AlertDialogAction({
-  className,
-  ...props
-}: React.ComponentProps<typeof Button>) {
+type alertDialogCloseProps<T extends ValidComponent = 'button'> =
+  AlertDialogCloseButtonProps<T> & {
+    class?: string
+  }
+
+export const AlertDialogClose = <T extends ValidComponent = 'button'>(
+  props: PolymorphicProps<T, alertDialogCloseProps<T>>
+) => {
+  const [local, rest] = splitProps(props as alertDialogCloseProps, ['class'])
+
   return (
-    <Button
-      data-slot="alert-dialog-action"
-      className={cn(className)}
-      {...props}
+    <AlertDialogPrimitive.CloseButton
+      class={cn(
+        buttonVariants({
+          variant: 'outline',
+        }),
+        'mt-2 md:mt-0',
+        local.class
+      )}
+      {...rest}
     />
   )
 }
 
-function AlertDialogCancel({
-  className,
-  variant = "outline",
-  size = "default",
-  ...props
-}: AlertDialogPrimitive.Close.Props &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+export const AlertDialogAction = <T extends ValidComponent = 'button'>(
+  props: PolymorphicProps<T, alertDialogCloseProps<T>>
+) => {
+  const [local, rest] = splitProps(props as alertDialogCloseProps, ['class'])
+
   return (
-    <AlertDialogPrimitive.Close
-      data-slot="alert-dialog-cancel"
-      className={cn(className)}
-      render={<Button variant={variant} size={size} />}
-      {...props}
+    <AlertDialogPrimitive.CloseButton
+      class={cn(buttonVariants(), local.class)}
+      {...rest}
     />
   )
-}
-
-export {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogMedia,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  AlertDialogTitle,
-  AlertDialogTrigger,
 }

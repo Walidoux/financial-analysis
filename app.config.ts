@@ -1,13 +1,14 @@
 import contentCollections from '@content-collections/solid-start'
 import { defineConfig } from '@solidjs/start/config'
 import tailwindcss from '@tailwindcss/vite'
+// @ts-expect-error does not export dts
 import pkg from '@vinxi/plugin-mdx'
 import remarkMath from 'remark-math'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 const { default: mdx } = pkg
 
-import rehypekatex from 'rehype-katex'
+import rehypemathJax from 'rehype-mathjax'
 import remarkFrontmatter from 'remark-frontmatter'
 
 export default defineConfig({
@@ -18,11 +19,10 @@ export default defineConfig({
       tsconfigPaths(),
       contentCollections(),
       mdx.withImports({})({
-        jsx: true,
-        jsxImportSource: 'solid-js',
+        jsxImportSource: 'solid-jsx',
         providerImportSource: '~/tools/solid-mdx',
         remarkPlugins: [remarkFrontmatter, remarkMath],
-        rehypePlugins: [rehypekatex],
+        rehypePlugins: [rehypemathJax],
       }),
     ],
   },

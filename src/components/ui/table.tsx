@@ -1,112 +1,93 @@
-'use client'
-
-import type { ComponentProps } from 'solid-js'
+import { type ComponentProps, splitProps } from 'solid-js'
 import { cn } from '~/lib/utils'
 
-function Table({ class: className, ...props }: ComponentProps<'table'>) {
+export const Table = (props: ComponentProps<'table'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
   return (
-    <div class='relative w-full overflow-x-auto' data-slot='table-container'>
+    <div class='w-full overflow-auto'>
       <table
-        class={cn('w-full caption-bottom text-sm', className)}
-        data-slot='table'
-        {...props}
+        class={cn('w-full caption-bottom text-sm', local.class)}
+        {...rest}
       />
     </div>
   )
 }
 
-function TableHeader({ class: className, ...props }: ComponentProps<'thead'>) {
+export const TableHeader = (props: ComponentProps<'thead'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
+  return <thead class={cn('[&_tr]:border-b', local.class)} {...rest} />
+}
+
+export const TableBody = (props: ComponentProps<'tbody'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
   return (
-    <thead
-      class={cn('[&_tr]:border-b', className)}
-      data-slot='table-header'
-      {...props}
-    />
+    <tbody class={cn('[&_tr:last-child]:border-0', local.class)} {...rest} />
   )
 }
 
-function TableBody({ class: className, ...props }: ComponentProps<'tbody'>) {
+export const TableFooter = (props: ComponentProps<'tfoot'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
   return (
     <tbody
-      class={cn('[&_tr:last-child]:border-0', className)}
-      data-slot='table-body'
-      {...props}
+      class={cn('bg-primary font-medium text-primary-foreground', local.class)}
+      {...rest}
     />
   )
 }
 
-function TableFooter({ class: className, ...props }: ComponentProps<'tfoot'>) {
-  return (
-    <tfoot
-      class={cn(
-        'border-t bg-muted/50 font-medium [&>tr]:last:border-b-0',
-        className
-      )}
-      data-slot='table-footer'
-      {...props}
-    />
-  )
-}
+export const TableRow = (props: ComponentProps<'tr'>) => {
+  const [local, rest] = splitProps(props, ['class'])
 
-function TableRow({ class: className, ...props }: ComponentProps<'tr'>) {
   return (
     <tr
       class={cn(
         'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
-        className
+        local.class
       )}
-      data-slot='table-row'
-      {...props}
+      {...rest}
     />
   )
 }
 
-function TableHead({ class: className, ...props }: ComponentProps<'th'>) {
+export const TableHead = (props: ComponentProps<'th'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
   return (
     <th
       class={cn(
-        'h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-        className
+        'h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5',
+        local.class
       )}
-      data-slot='table-head'
-      {...props}
+      {...rest}
     />
   )
 }
 
-function TableCell({ class: className, ...props }: ComponentProps<'td'>) {
+export const TableCell = (props: ComponentProps<'td'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
   return (
     <td
       class={cn(
-        'whitespace-nowrap p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-        className
+        'p-2 align-middle [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-0.5',
+        local.class
       )}
-      data-slot='table-cell'
-      {...props}
+      {...rest}
     />
   )
 }
 
-function TableCaption({
-  class: className,
-  ...props
-}: ComponentProps<'caption'>) {
+export const TableCaption = (props: ComponentProps<'caption'>) => {
+  const [local, rest] = splitProps(props, ['class'])
+
   return (
     <caption
-      class={cn('mt-4 text-muted-foreground text-sm', className)}
-      data-slot='table-caption'
-      {...props}
+      class={cn('mt-4 text-muted-foreground text-sm', local.class)}
+      {...rest}
     />
   )
-}
-
-export {
-  Table,
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCaption,
 }

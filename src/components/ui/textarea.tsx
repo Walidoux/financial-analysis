@@ -1,18 +1,28 @@
-import * as React from "react"
+import type { PolymorphicProps } from '@kobalte/core/polymorphic'
+import type { TextFieldTextAreaProps } from '@kobalte/core/text-field'
+import { TextArea as TextFieldPrimitive } from '@kobalte/core/text-field'
+import type { ValidComponent, VoidProps } from 'solid-js'
+import { splitProps } from 'solid-js'
+import { cn } from '~/lib/utils'
 
-import { cn } from "~/lib/utils"
+type textAreaProps<T extends ValidComponent = 'textarea'> = VoidProps<
+  TextFieldTextAreaProps<T> & {
+    class?: string
+  }
+>
 
-function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
+export const TextArea = <T extends ValidComponent = 'textarea'>(
+  props: PolymorphicProps<T, textAreaProps<T>>
+) => {
+  const [local, rest] = splitProps(props as textAreaProps, ['class'])
+
   return (
-    <textarea
-      data-slot="textarea"
-      className={cn(
-        "border-input dark:bg-input/30 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 disabled:bg-input/50 dark:disabled:bg-input/80 rounded-none border bg-transparent px-2.5 py-2 text-xs transition-colors focus-visible:ring-1 aria-invalid:ring-1 md:text-xs placeholder:text-muted-foreground flex field-sizing-content min-h-16 w-full outline-none disabled:cursor-not-allowed disabled:opacity-50",
-        className
+    <TextFieldPrimitive
+      class={cn(
+        'flex min-h-15 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-shadow placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+        local.class
       )}
-      {...props}
+      {...rest}
     />
   )
 }
-
-export { Textarea }

@@ -5,6 +5,7 @@ import type { Component } from 'solid-js'
 
 import { Typography as BaseTypography } from '~/components/base-typography'
 import { Typography as CustomTypography } from '~/components/custom-typography'
+import { Separator } from '~/components/ui/separator'
 
 // biome-ignore lint/suspicious/noExplicitAny: different components have different props
 export const useMDXComponents: () => Record<string, Component<any>> = () => ({
@@ -12,7 +13,7 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
   ...CustomTypography,
 
   a: (props) => <A {...props} />,
-  hr: (props) => <hr {...props} />,
+  hr: (props) => <Separator {...props} />,
   i: (props) => <i {...props} />,
   b: (props) => <b {...props} />,
   em: (props) => <em {...props} />,
