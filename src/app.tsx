@@ -1,7 +1,9 @@
+import './styles.css'
+
 import { MetaProvider, Title } from '@solidjs/meta'
+import { Router } from '@solidjs/router'
 import { FileRoutes } from '@solidjs/start/router'
 import { type ParentComponent, Suspense } from 'solid-js'
-import './styles.css'
 import { Navbar } from './components/navbar'
 
 const Layout: ParentComponent = (props) => {
@@ -15,11 +17,15 @@ const Layout: ParentComponent = (props) => {
 
 export default function App() {
   return (
-    <MetaProvider>
-      <Title>Finance Career</Title>
-      <Layout>
-        <FileRoutes />
-      </Layout>
-    </MetaProvider>
+    <Router
+      root={(props) => (
+        <MetaProvider>
+          <Title>Mystic UI</Title>
+
+          <Layout>{props.children}</Layout>
+        </MetaProvider>
+      )}>
+      <FileRoutes />
+    </Router>
   )
 }
