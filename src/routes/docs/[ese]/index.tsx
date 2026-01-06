@@ -1,9 +1,9 @@
 import { Meta, Title } from '@solidjs/meta'
 import { A, type RouteSectionProps } from '@solidjs/router'
-import type { Component } from 'solid-js'
-import { createSignal, createEffect, For } from 'solid-js'
-import { Dynamic } from 'solid-js/web'
 import { allPages } from 'content-collections'
+import type { Component } from 'solid-js'
+import { createEffect, createSignal, For } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
 import { Card, CardContent } from '~/components/ui/card'
 
 export default function EsePage(props: RouteSectionProps) {
@@ -32,11 +32,11 @@ export default function EsePage(props: RouteSectionProps) {
     <>
       <Title>{props.params.ese} | Finance Career</Title>
       <Meta
-        name='description'
         content='Collection of beautiful UI components for SolidJS that work with Tailwind and PandaCSS, an unofficial port of magic ui to solidjs.'
+        name='description'
       />
       <Dynamic component={MDXComp()} />
-      <ul class='grid grid-cols-3 gap-3 mt-6'>
+      <ul class='mt-6 grid grid-cols-3 gap-3'>
         <For each={subPages()}>
           {(page) => (
             <Card>
