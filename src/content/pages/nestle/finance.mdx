@@ -1,0 +1,76 @@
+---
+title: Finance
+---
+
+## Finance
+
+Le cadre financier gère les actifs financiers et maintient la stabilité globale de la banque (?). Ses principales responsabilités sont la gestion : De la trésorerie, des notes de crédit et le reporting financier mensuel, la planification et l'analyse de la situation financière, la gestion des risques financiers, les investissements et les financements, la conformité réglementaire ainsi que l'orientation stratégique.
+
+Le rapprochement bancaire
+
+En gestion de trésorerie, le département se charge de la liquidité et anticipe les besoins de flux de trésorerie afin de combler les éventuels déficits.
+
+En matière de notes de crédit et de reporting financier, il tient les comptes et produit les états financiers, tels que les bilans et les comptes de résultats, fournissant une image fidèle de la santé financière de la banque.
+
+Derrière les coulisses, une réconciliation se fait avec NBS chaque semaine au niveau de la comptabilité pour s'assurer à ce que les comptes soient soldés et qu'aucun montant reste suspendu ou en attente d'affectation sur le solde du compte du client.
+
+Le traitement des factures via SAP est l'une des tâches les plus fréquentées puisque la réception de ces pièces justificatives doivent être archivées, un suivi est effectué au niveau des PO (Purchase orders). La vérification de l'état des factures est tout aussi essentiel pour (?)
+
+On saisie le numéro de bon de commande (PO) pour voir l'état de la facture à savoir :
+
+- Quantité de la commande
+- Facture reçue (ou pas encore)
+
+La création d'une PO ne génère pas d'écriture comptable mais la réception de la facture à la date de livraison l'enclenche, il se peut que parfois la facture ne peut que être reçu ultérieurement et elle est pénalisée selon la nouvelle loi de retard de paiement. La bonne approche d'un fournisseur est le dépôt de trois éléments : BL Par la suite, un accusé de réception est communiquée au fournisseur après traitement de la facture
+
+> Questions ?
+
+- [ ] À quel niveau la déclaration de la TVA se fait ?
+
+## Bon à savoir
+
+Ne pas clôturer les PO CAPEX parce que ça fou le bazars niveau comptabilité (sûrement par rapport à l'amortissement)
+
+Nestlé suit un schéma de triangulation, où quand Nestlé France vend Maroc, l'entité Nestradis joue l'intermédiaire où elle facture la prestation (transport) accompagnée des droits de douanes, des frais de stocks si l'entrepôt est saturé qui est assuré par le prestataire CoMatieres, des douanes vis-à-vis du port.
+
+Une PO d'import peut avoir des conditions et ne peuvent être changer si une GR est rattachée sur cette dernière
+
+Consultation des scans de factures colonne IR niveau référence code pour voir l'état de comptabilisation exportable en format excel
+
+Utilisation de l'IA et l'IoT et de SAP pour prévoir la demande, gérer les stocks et piloter les flux.
+Suivi en temps réel, automatisation des entrepôts, robotisation
+
+Nestlé optimise ses coûts en out-sourcant sa comptabilité à NBS et son stock à Geodis et CoMatières
+Si le client n'a pas reçu sa facture au bout de 60j la PO est overdue, dont ce cas c'est alertant, on relance le fournisseur
+Des visites guidées sont organisées à l'usine pour voir en temps réel les flux et la chaîne de production et toute la logistique derrière.
+
+Nestlé Globe (One step ahead)
+
+- GR > IR : Article (produit livré) mais pas encore facturé
+- Facture non encore reçue
+- Facture bloquée dans un autre système
+- Liv. Partielle non suivie côté Frs
+- GR < IR : Article (produit pas livré) et facture reçue
+- Livraison non enregistrée (oublie de réception physique ou saisie GR)
+- Livraison partielle en retard
+- Erreur de facturation
+- GR = IR mais != quantity ordered (livraison/facturation partielle)
+- Vérifier si le reliquat est prévu (backorder)
+- Close le PO si le reliquat est annulé
+- Planifier une relance fournisseur
+
+Au moment de la soumission de la GR, la charge constatée automatiquement par le système, il y a des cas ou la facture n'est pas reçue
+
+Une réunion se fait régulièrement avec NBS pour faire la réconciliation et close des PO des factures antérieures
+
+IR manquante = facture non reçue
+GR = 0 et date > 60j obsolète
+Facture rejetée automatiquement sans GR
+
+> Organisation interne :
+
+- Décentralisation dans chaque pays / région adaptée à la stratégie
+
+> RH :
+
+- Des lots de produits Nestlé sont distribués au personnel

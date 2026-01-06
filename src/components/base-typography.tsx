@@ -1,7 +1,6 @@
-import type { SolidMarkdownOptions } from 'solid-markdown'
 import { cn } from '~/lib/utils'
 
-export const Typography: SolidMarkdownOptions['components'] = {
+export const Typography = {
   h1(props) {
     return (
       <h1

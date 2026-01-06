@@ -14,7 +14,12 @@ const docs = defineCollection({
 	directory: "src/content/docs",
 	include: "**/*.mdx",
 	schema: (z) => ({
-		title: z.string()
+		title: z.string(),
+		description: z.string(),
+		category: z.enum([
+			"calculs",
+			"generalites",
+		]),
 	}),
 });
 

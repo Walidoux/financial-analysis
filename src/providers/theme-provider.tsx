@@ -1,5 +1,6 @@
 import type { Component, ParentProps } from 'solid-js'
 import { createContext, createEffect, createSignal, useContext } from 'solid-js'
+import { isServer } from 'solid-js/web'
 
 type Theme = 'dark' | 'light' | 'system'
 
@@ -24,12 +25,19 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
 export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   const [theme, setTheme] = createSignal<Theme>(
-    ((localStorage.getItem(props.storageKey ?? 'vite-ui-theme') as Theme) ||
-      props.defaultTheme) ??
-      'system'
+    (() => {
+      if (isServer) {
+        return props.defaultTheme ?? 'system'
+      }
+      return ((localStorage.getItem(props.storageKey ?? 'vite-ui-theme') as Theme) ||
+        props.defaultTheme) ??
+        'system'
+    })()
   )
 
   createEffect(() => {
+    if (isServer) return
+
     const root = window.document.documentElement
 
     root.classList.remove('light', 'dark')
@@ -50,7 +58,9 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   const value = {
     theme,
     setTheme: (newTheme: Theme) => {
-      localStorage.setItem(props.storageKey ?? 'vite-ui-theme', newTheme)
+      if (!isServer) {
+        localStorage.setItem(props.storageKey ?? 'vite-ui-theme', newTheme)
+      }
       setTheme(newTheme)
     },
   }

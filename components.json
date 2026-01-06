@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-lyra",
+  "style": "base-lyra",
   "iconLibrary": "lucide",
   "menuColor": "default",
   "menuAccent": "subtle",
@@ -18,5 +18,6 @@
     "utils": "~/lib/utils",
     "lib": "~/lib",
     "hooks": "~/hooks"
-  }
+  },
+  "registries": {}
 }

@@ -1,3 +1,10 @@
-node_modules
 dist
+.solid
+.output
+.vinxi
+app.config.timestamp_*.js
+.env
+.env*.local
+/node_modules
+gitignore
 .content-collections

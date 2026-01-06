@@ -1,0 +1,28 @@
+import { Meta, Title } from '@solidjs/meta'
+import type { RouteSectionProps } from '@solidjs/router'
+import type { Component } from 'solid-js'
+import { createSignal, createEffect } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
+
+export default function Subpage(props: RouteSectionProps) {
+  const [MDXComp, setMDXComp] = createSignal<Component>()
+
+  createEffect(() => {
+    const ese = props.params.ese
+    const subpage = props.params.subpage
+    import(`~/content/pages/${ese}/${subpage}.mdx`).then((mod) =>
+      setMDXComp(() => mod.default)
+    )
+  })
+
+  return (
+    <>
+      <Title>{props.params.subpage} | Finance Career</Title>
+      <Meta
+        name='description'
+        content='Collection of beautiful UI components for SolidJS that work with Tailwind and PandaCSS, an unofficial port of magic ui to solidjs.'
+      />
+      <Dynamic component={MDXComp()} />
+    </>
+  )
+}

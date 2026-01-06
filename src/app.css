@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 @import '@fontsource-variable/raleway';
 
 @custom-variant dark (&:is(.dark *));
@@ -119,16 +120,7 @@
   * {
     @apply border-border outline-ring/50;
   }
-  #root {
-    @apply font-sans bg-background text-foreground overflow-hidden h-screen max-w-screen;
+  #app {
+    @apply font-sans bg-background text-foreground h-screen max-w-screen overflow-hidden;
   }
-  html {
-    @apply font-sans;
-  }
-}
-
-/* KaTeX display math styling */
-.katex-display {
-  width: fit-content;
-  margin: 1em auto;
 }

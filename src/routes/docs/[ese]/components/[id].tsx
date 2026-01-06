@@ -1,20 +1,8 @@
 import { Meta, Title } from "@solidjs/meta";
-import type { RouteDefinition, RouteSectionProps } from "@solidjs/router";
+import type { RouteSectionProps } from "@solidjs/router";
 import { allDocs } from "content-collections";
 import { createMemo } from "solid-js";
 import { useMDXComponents } from "~/tools/solid-mdx";
-
-// export const route = {
-// 	preload: async (args) =>
-// 		await Promise.all([
-// 			// preload the story source code
-// 			getStorySource(
-// 				args.params.ese,
-// 				args.params.id,
-// 				"default",
-// 			),
-// 		]),
-// } satisfies RouteDefinition;
 
 const MDXComponents = useMDXComponents();
 
@@ -29,13 +17,11 @@ export default function PandaDocsPage(props: RouteSectionProps) {
 
 	return (
 		<>
-			<Title>{doc().title} component | Mystic UI</Title>
+			<Title>{doc().title} | Finance Career</Title>
 			<Meta name="description" content={doc().description} />
 			<MDXComponents.h1>{doc().title}</MDXComponents.h1>
 			<MDXComponents.p textStyle="xl">{doc().description}</MDXComponents.p>
 			<MDXComponents.hr />
-			<MDXComponents.hr />
-			<MDXComponents.h2>Installation</MDXComponents.h2>
 		</>
 	);
 }
