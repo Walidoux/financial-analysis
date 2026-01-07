@@ -59,7 +59,7 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
   },
 
   p(props) {
-    return <p class={cn('not-first:mt-6 leading-7', props.class)} {...props} />
+    return <p class={cn('not-first:mt-2 leading-7', props.class)} {...props} />
   },
 
   Muted(props) {

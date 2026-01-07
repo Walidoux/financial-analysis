@@ -1,12 +1,19 @@
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeSwitcher } from './theme-switcher'
 
 export const Navbar = () => {
- 	return (
- 		<nav class="sticky top-0 border-b">
- 		  <div class="max-w-6xl py-2 px-3 flex items-center justify-between mx-auto h-full">
-        <img src="/logo.svg" alt="Logo" height={50} width={50} draggable={false} class="select-none" />
-    		<ThemeSwitcher />
+  return (
+    <nav class='sticky top-0 flex-1 border-b'>
+      <div class='mx-auto flex h-full max-w-6xl items-center justify-between px-3 py-2'>
+        <img
+          alt='Logo'
+          class='select-none'
+          draggable={false}
+          height={50}
+          src='/logo.svg'
+          width={50}
+        />
+        <ThemeSwitcher />
       </div>
- 		</nav>
- 	);
- };
+    </nav>
+  )
+}

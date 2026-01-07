@@ -9,7 +9,18 @@ const defaultSubSections = [
     title: 'Overview',
     links: [
       { title: 'Introduction', href: '/docs/' },
-      { title: 'Nestlé', href: '/docs/nestle' },
+      { title: 'How this works ?', href: '/docs/how-this-works' },
+      { title: 'FAQ', href: '/docs/faq' },
+    ],
+  },
+]
+
+const internships = [
+  {
+    title: 'Internships',
+    links: [
+      { title: 'Manar Conseil', href: '/docs/manar-conseil' },
+      { title: 'Nestlé Maroc', href: '/docs/nestle' },
       { title: 'DOOC', href: '/docs/dooc' },
     ],
   },
@@ -32,6 +43,7 @@ const SideNavLink: ParentComponent<{ href: string; ese: string }> = (props) => {
 const SideNav: Component<{ ese: string }> = (props) => {
   const sections = [
     ...defaultSubSections,
+    ...internships,
     ...Object.entries(
       allDocs.reduce(
         (acc: Record<string, { title: string; href: string }[]>, doc) => {
@@ -80,7 +92,7 @@ export default function DocsLayout(props: RouteSectionProps) {
     <main class='grid h-full grid-cols-[200px_1fr] gap-6'>
       <SideNav ese={props.params.ese as string} />
 
-      <section class='h-full min-h-0 flex-1 overflow-y-auto border p-6'>
+      <section class='h-[calc(100vh-65px)] overflow-y-auto border p-6'>
         {props.children}
       </section>
     </main>
