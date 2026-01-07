@@ -1,5 +1,13 @@
-import { Store } from "@tanstack/solid-store";
+import { Store } from '@tanstack/solid-store'
+
+export const categoryMap: Record<string, string> = {
+  calculs: 'Calculs',
+  generalites: 'Généralités',
+  ressources: 'Ressources',
+}
+
+export const categoriesKeys = Object.keys(categoryMap) as [string, ...string[]]
 
 export const store = new Store({
-	sideNavOpen: false,
-});
+  sideNavOpen: false,
+})

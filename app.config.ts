@@ -8,6 +8,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 const { default: mdx } = pkg
 
+import mdxMermaid from 'mdx-mermaid'
 import rehypeKatex from 'rehype-katex'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxEnhanced from 'remark-mdx-math-enhanced'
@@ -22,7 +23,12 @@ export default defineConfig({
       mdx.withImports({})({
         jsxImportSource: 'solid-jsx',
         providerImportSource: '~/tools/solid-mdx',
-        remarkPlugins: [remarkFrontmatter, remarkMath, [remarkMdxEnhanced, { component: 'Math' }]],
+        remarkPlugins: [
+          remarkFrontmatter,
+          remarkMath,
+          [remarkMdxEnhanced, { component: 'Math' }],
+          [mdxMermaid, { output: 'svg' }],
+        ],
         rehypePlugins: [rehypeKatex],
       }),
     ],

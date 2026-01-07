@@ -14,7 +14,7 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
     return (
       <h1
         class={cn(
-          'scroll-m-20 text-balance font-extrabold text-4xl tracking-tight',
+          'not-first:mt-6 scroll-m-20 text-balance font-extrabold text-4xl tracking-tight',
           props.class
         )}>
         {props.children}
@@ -110,7 +110,7 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
   strong: (props) => <strong {...props} />,
   li(props) {
     return (
-      <li class={cn('inline-flex items-center', props.class)} {...props}>
+      <li class={cn('', props.class)} {...props}>
         {props.children}
       </li>
     )
@@ -118,7 +118,7 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
   ol: (props) => <ol {...props} />,
   pre: (props) => <pre {...props} />,
 
-  EBITDA: RawTable,
+  RawTable,
 
   Math({ children, block = false }: { children: string; block?: boolean }) {
     return (

@@ -1,6 +1,5 @@
 import { defineCollection, defineConfig } from '@content-collections/core'
-
-export const categories = ['calculs', 'generalites'] as const
+import { categoriesKeys } from '~/lib/store'
 
 const pages = defineCollection({
   name: 'pages',
@@ -18,7 +17,7 @@ const docs = defineCollection({
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
-    category: z.enum(categories),
+    category: z.enum(categoriesKeys),
   }),
 })
 

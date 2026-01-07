@@ -2,12 +2,7 @@ import type { RouteSectionProps } from '@solidjs/router'
 import { A } from '@solidjs/router'
 import { allDocs } from 'content-collections'
 import { type Component, For, type ParentComponent } from 'solid-js'
-import type { categories } from '../../../content-collections'
-
-const categoryMap: Record<(typeof categories)[number], string> = {
-  calculs: 'Calculs',
-  generalites: 'Généralités',
-}
+import { categoryMap } from '~/lib/store'
 
 const defaultSubSections = [
   {
