@@ -66,21 +66,6 @@ Pour un bien facturé :
 - Montant total
 - Montant HT, TTC et TVA
 
-> Matrice de Responsabilités (RACI simplifié)
-
-export const props = { R: "Réalise", "A": "Approbateur", "C": "Consulté", "I": "Informé" }
-export const headers = ["Tâche", "Consultant / Demandeur", "Chef de Projet", "Achats / Admin", "Direction / Finance"]
-export const rows = [
-    ["Achat : Expression Budget (DA)", props.R, props.C, props.I, props.I],
-    ["Achat : Validation Budget", props.I, props.R, props.C, props.I],
-    ["Achat : Négociation & BC", props.I, props.I, props.C, props.I],
-    ["Achat : Validation Service Fait", props.R, props.C, props.I, props.I],
-    ["Inventaire : Maintien du matériel", props.R, props.I, props.I, props.I],
-    ["Inventaire : Comptage Annuel", props.C, props.I, props.R, props.A]
-]
-
-<RawTable data={{ headers, rows }} class="w-[900px]" />
-
 # Volet 2 : Procédure d'inventaire (Gestion des actifs)
 
 ## Périmètre de l'inventaire

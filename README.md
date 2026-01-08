@@ -12,7 +12,12 @@
 - [ ] Upload xlsx/csv files in page to produce mdx code to copy and insert it to the page
 - [ ] Code custom blockquote, code can be grabbed from catalog manager of rypi-ui
 - [ ] In dev mode only, add button to go file using preferred IDE
-- [ ] Beautify scrollbar styles
+
+<details>
+<summary>✅ Completed tasks</summary>
+- [x] Fix deployement workflow after migrating to SolidStart
+- [x] Beautify scrollbar styles
+</details>
 
 ## 📜 Content
 
