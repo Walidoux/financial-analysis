@@ -29,30 +29,32 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
       if (isServer) {
         return props.defaultTheme ?? 'system'
       }
-      return ((localStorage.getItem(props.storageKey ?? 'vite-ui-theme') as Theme) ||
-        props.defaultTheme) ??
+      return (
+        ((localStorage.getItem(props.storageKey ?? 'vite-ui-theme') as Theme) ||
+          props.defaultTheme) ??
         'system'
+      )
     })()
   )
 
   createEffect(() => {
-    if (isServer) return
+    if (!isServer) {
+      const root = window.document.documentElement
 
-    const root = window.document.documentElement
+      root.classList.remove('light', 'dark')
 
-    root.classList.remove('light', 'dark')
+      if (theme() === 'system') {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+          .matches
+          ? 'dark'
+          : 'light'
 
-    if (theme() === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-        .matches
-        ? 'dark'
-        : 'light'
+        root.classList.add(systemTheme)
+        return
+      }
 
-      root.classList.add(systemTheme)
-      return
+      root.classList.add(theme())
     }
-
-    root.classList.add(theme())
   })
 
   const value = {

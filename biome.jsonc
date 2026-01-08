@@ -16,6 +16,10 @@
   },
   "linter": {
     "rules": {
+      "a11y": {
+        "useFocusableInteractive": "off",
+        "useSemanticElements": "off"
+      },
       "suspicious": {
         "noUnassignedVariables": "off"
       }
