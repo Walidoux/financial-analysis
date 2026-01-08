@@ -21,7 +21,9 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme='system' storageKey={`${APP_NAME.SHORT}-theme`}>
       <Router
-        base={import.meta.env.PROD ? `/${APP_NAME.SHORT}` : '/'}
+        base={
+          process.env.NODE_ENV === 'production' ? `/${APP_NAME.SHORT}` : '/'
+        }
         root={(props) => (
           <MetaProvider>
             <Title>{APP_NAME.LONG}</Title>
