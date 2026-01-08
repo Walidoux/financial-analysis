@@ -1,42 +1,18 @@
-import { A } from '@solidjs/router'
 import {
   TbAlertCircle,
   TbAlertTriangle,
   TbBulb,
   TbInfoCircle,
 } from 'solid-icons/tb'
-import type { JSXElement, ParentProps } from 'solid-js'
+import { For, type JSXElement, type ParentProps } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
 import { cn } from 'tailwind-variants'
+import { parseMarkdown } from '../lib/utils'
 
-const codeRegex = /^%(.*)%$/
-
-function processBold(text: string): (JSXElement | string)[] {
-  const boldRegex = /\*\*(.+?)\*\*/g
-  const result: (JSXElement | string)[] = []
-  let lastIndex = 0
-  let match: RegExpExecArray | null
-
-  while (true) {
-    match = boldRegex.exec(text)
-    if (match === null) {
-      break
-    }
-    if (match.index > lastIndex) {
-      result.push(text.slice(lastIndex, match.index))
-    }
-
-    result.push(<strong>{match[1]}</strong>)
-    lastIndex = match.index + match[0].length
-  }
-
-  if (lastIndex < text.length) {
-    result.push(text.slice(lastIndex))
-  }
-
-  return result
-}
-
-function CodeCaption(props: { class?: string; label: string }): JSXElement {
+export const CodeCaption = (props: {
+  class?: string
+  label: string
+}): JSXElement => {
   return (
     <code
       class={cn(
@@ -46,48 +22,6 @@ function CodeCaption(props: { class?: string; label: string }): JSXElement {
       {props.label}
     </code>
   )
-}
-
-function parseMarkdown(text: string): JSXElement[] {
-  return text.split(/(%.*?%)/g).flatMap((part) => {
-    const codeMatch = part.match(codeRegex)
-    if (codeMatch) {
-      return <CodeCaption label={codeMatch[1].trim()} />
-    }
-
-    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
-    const nodes: JSXElement[] = []
-    let lastIndex = 0
-    let match: RegExpExecArray | null
-
-    while (true) {
-      match = linkRegex.exec(part)
-      if (match === null) {
-        break
-      }
-      if (match.index > lastIndex) {
-        nodes.push(...processBold(part.slice(lastIndex, match.index)))
-      }
-
-      nodes.push(
-        <A
-          class='font-semibold underline underline-offset-4'
-          href={match[2]}
-          rel='noopener noreferrer'
-          target='_blank'>
-          {match[1]}
-        </A>
-      )
-
-      lastIndex = match.index + match[0].length
-    }
-
-    if (lastIndex < part.length) {
-      nodes.push(...processBold(part.slice(lastIndex)))
-    }
-
-    return nodes.length ? nodes : part
-  })
 }
 
 type CalloutType = 'tip' | 'note' | 'caution' | 'attention'
@@ -106,8 +40,11 @@ const config: Record<CalloutType, Callout> = {
     title: 'Astuce',
   },
   note: {
-    icon: () => <TbInfoCircle class='text-[#646cff] dark:text-blue-200' size={20} />,
-    color: 'dark:bg-blue-900/50 bg-[#646cff14] text-[#454ce1] dark:text-blue-100',
+    icon: () => (
+      <TbInfoCircle class='text-[#646cff] dark:text-blue-200' size={20} />
+    ),
+    color:
+      'dark:bg-blue-900/50 bg-[#646cff14] text-[#454ce1] dark:text-blue-100',
     border: 'border-l-4 border-[#646cff]',
     title: 'Note',
   },
@@ -135,6 +72,8 @@ interface CallProps extends ParentProps {
 
 export function Callout(props: Partial<CallProps>): JSXElement {
   const { title, border, color, icon: Icon } = config[props.type ?? 'note']
+  const components = parseMarkdown(props.children as string)
+
   return (
     <div class={`${color} ${border} my-4 flex flex-col gap-2 rounded-r-md p-4`}>
       <div class='inline-flex items-center gap-2'>
@@ -145,7 +84,17 @@ export function Callout(props: Partial<CallProps>): JSXElement {
             .concat(props.subject ? ` : ${props.subject}` : '')}
         </span>
       </div>
-      <div class='text-sm'>{parseMarkdown(props.children as string)}</div>
+      <div class='text-sm'>
+        <For each={components}>
+          {(comp) =>
+            typeof comp === 'string' ? (
+              comp
+            ) : (
+              <Dynamic component={comp.type}>{comp.children}</Dynamic>
+            )
+          }
+        </For>
+      </div>
     </div>
   )
 }

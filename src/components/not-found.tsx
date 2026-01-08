@@ -1,11 +1,11 @@
-import { Title } from '@solidjs/meta'
 import { HttpStatusCode } from '@solidjs/start'
+import { Metadata } from './metadata'
 
 export default function NotFound() {
   return (
     <>
       <Illustration class='opactiy-20' />
-      <Title>Page introuvable</Title>
+      <Metadata title='Page introuvable' />
       <HttpStatusCode code={404} />
       <h1 class='mt-10'>Cette page n'existe pas</h1>
     </>

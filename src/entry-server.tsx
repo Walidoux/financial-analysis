@@ -1,14 +1,14 @@
 // @refresh reload
 import { createHandler, StartServer } from '@solidjs/start/server'
 
+import { Metadata } from './components/metadata'
+
 export default createHandler(() => (
   <StartServer
     document={({ assets, children, scripts }) => (
       <html lang='en'>
         <head>
-          <meta charset='utf-8' />
-          <meta content='width=device-width, initial-scale=1' name='viewport' />
-          <link href='/favicon.ico' rel='icon' />
+          <Metadata title='Fintech Academy' />
           {assets}
         </head>
         <body>

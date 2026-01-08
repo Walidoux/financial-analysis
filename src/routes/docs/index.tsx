@@ -1,18 +1,13 @@
 import type { RouteSectionProps } from '@solidjs/router'
-import { Meta, Title } from '@solidjs/meta'
-
-import MDXContent from '~/content/pages/introduction/index.mdx'
+import { Metadata } from '~/components/metadata'
 import { SideNav } from '~/components/side-nav'
-import { APP, NAV_HEIGHT } from '~/lib/store'
+import MDXContent from '~/content/pages/introduction/index.mdx'
+import { NAV_HEIGHT } from '~/lib/store'
 
 export default function IntroductionPage(_props: RouteSectionProps) {
   return (
     <>
-      <Title>Introduction | {APP.LONG_NAME}</Title>
-      <Meta
-        content='Collection of beautiful UI components for SolidJS that work with Tailwind and PandaCSS, an unofficial port of magic ui to solidjs.'
-        name='description'
-      />
+      <Metadata title='Introduction' />
       <main
         class='grid grid-cols-[225px_1fr]'
         style={{ height: `calc(100vh - ${NAV_HEIGHT}px)` }}>

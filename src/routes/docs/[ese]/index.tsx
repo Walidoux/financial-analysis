@@ -1,12 +1,11 @@
-import { Meta, Title } from '@solidjs/meta'
 import { A, type RouteSectionProps } from '@solidjs/router'
 import { allPages } from 'content-collections'
 import type { Component } from 'solid-js'
 import { createEffect, createSignal, For } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import { Metadata } from '~/components/metadata'
 import NotFound from '~/components/not-found'
 import { Card, CardContent } from '~/components/ui/card'
-import { APP } from '~/lib/store'
 
 export default function EsePage(props: RouteSectionProps) {
   const [MDXComp, setMDXComp] = createSignal<Component>()
@@ -36,10 +35,7 @@ export default function EsePage(props: RouteSectionProps) {
 
   return (
     <>
-      <Title>
-        {props.params.ese} | {APP.LONG_NAME}
-      </Title>
-      <Meta content={''} name='description' />
+      <Metadata title={props.params.ese as string} />
       <Dynamic component={MDXComp()} />
       <ul class='mt-6 grid grid-cols-3 gap-3'>
         <For each={subPages()}>

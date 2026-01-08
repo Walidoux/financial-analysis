@@ -6,21 +6,13 @@ import { A } from '@solidjs/router'
 import katex from 'katex'
 import { type Component, createSignal } from 'solid-js'
 import { cn } from 'tailwind-variants'
+
 import { Callout } from '~/components/callout'
 import { RawTable } from '~/components/raw-table'
 import { CheckboxControl } from '~/components/ui/checkbox'
 import { Separator } from '~/components/ui/separator'
-
-const createSlug = (text: string) =>
-  text.toString().toLowerCase().replace(/\s+/g, '-')
-
-const taskListRegex = /^\s*(\[[\sx]\])\s*(.+)$/i
-
-export const capitalize = (str: string) =>
-  str.charAt(0).toUpperCase() + str.slice(1)
-
-const generateFaviconUrl = (domain: string) =>
-  `https://s2.googleusercontent.com/s2/favicons?domain=${domain}`
+import { REGEX } from '~/lib/store'
+import { createSlug, generateFaviconUrl } from '~/lib/utils'
 
 // biome-ignore lint/suspicious/noExplicitAny: different components have different props
 export const useMDXComponents: () => Record<string, Component<any>> = () => ({
@@ -123,7 +115,6 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
   },
 
   a: (props) => {
-    console.log(props)
     return (
       <A class='inline-flex items-center gap-x-1' href={props.href} {...props}>
         <img
@@ -142,10 +133,11 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
   b: (props) => <b {...props} />,
   em: (props) => <em {...props} />,
   strong: (props) => <strong {...props} />,
+
   li(props) {
     const children = props.children
     if (typeof children === 'string') {
-      const match = children.match(taskListRegex)
+      const match = children.match(REGEX.TASK_LIST)
       const [checked, setChecked] = createSignal(
         match ? match[1].toLowerCase() === '[x]' : false
       )

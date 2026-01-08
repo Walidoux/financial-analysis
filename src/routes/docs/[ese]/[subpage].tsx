@@ -1,9 +1,8 @@
-import { Meta, Title } from '@solidjs/meta'
 import type { RouteSectionProps } from '@solidjs/router'
 import type { Component } from 'solid-js'
 import { createEffect, createSignal } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
-import { APP } from '~/lib/store'
+import { Metadata } from '~/components/metadata'
 import NotFound from '~/routes/[...404]'
 
 export default function Subpage(props: RouteSectionProps) {
@@ -17,13 +16,7 @@ export default function Subpage(props: RouteSectionProps) {
 
   return (
     <>
-      <Title>
-        {props.params.subpage} | {APP.LONG_NAME}
-      </Title>
-      <Meta
-        content='Collection of beautiful UI components for SolidJS that work with Tailwind and PandaCSS, an unofficial port of magic ui to solidjs.'
-        name='description'
-      />
+      <Metadata title={props.params.subpage as string} />
       <Dynamic component={MDXComp()} />
     </>
   )
