@@ -4,6 +4,7 @@ import { allPages } from 'content-collections'
 import type { Component } from 'solid-js'
 import { createEffect, createSignal, For } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+import NotFound from '~/components/not-found'
 import { Card, CardContent } from '~/components/ui/card'
 import { APP_NAME } from '~/lib/store'
 
@@ -23,9 +24,14 @@ export default function EsePage(props: RouteSectionProps) {
       .sort((a, b) => a.title.localeCompare(b.title))
 
   createEffect(() => {
-    import(`~/content/pages/${props.params.ese}/index.mdx`).then((mod) =>
-      setMDXComp(() => mod.default)
-    )
+    import(`~/content/pages/${props.params.ese}/index.mdx`)
+      .then((mod) => setMDXComp(() => mod.default))
+      .catch(async () => {
+        return await import(`~/content/docs/${props.params.ese}.mdx`).then(
+          (mod) => setMDXComp(() => mod.default)
+        )
+      })
+      .catch(() => setMDXComp(() => NotFound))
   })
 
   return (
