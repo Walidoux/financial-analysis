@@ -12,8 +12,10 @@ import mdxMermaid from 'mdx-mermaid'
 import rehypeKatex from 'rehype-katex'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxEnhanced from 'remark-mdx-math-enhanced'
+import { APP_NAME } from './src/lib/store'
 
 export default defineConfig({
+  ssr: true,
   extensions: ['mdx'],
   vite: {
     plugins: [
@@ -34,6 +36,9 @@ export default defineConfig({
     ],
   },
   server: {
+    baseURL: `/${APP_NAME.SHORT}/`,
+    preset: 'github-pages',
+    static: true,
     prerender: {
       crawlLinks: true,
     },

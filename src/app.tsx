@@ -21,6 +21,7 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme='system' storageKey={`${APP_NAME.SHORT}-theme`}>
       <Router
+        base={`/${APP_NAME.SHORT}`}
         root={(props) => (
           <MetaProvider>
             <Title>{APP_NAME.LONG}</Title>

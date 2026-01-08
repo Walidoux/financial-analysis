@@ -1,50 +1,43 @@
-name: Deploy Solid + Vite to Github Pages
+name: Deploy SolidStart to Github Pages
 
 on:
-    workflow_dispatch:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-    build-deploy:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            pages: write
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+        env:
+          NITRO_PRESET: github_pages
 
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v1
-              with:
-                  bun-version: latest
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: ./.output/public
 
-            - name: Cache Bun dependencies
-              uses: actions/cache@v4
-              with:
-                  path: ~/.bun/install/cache
-                  key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock', '**/bun.lockb') }}
-                  restore-keys: |
-                      ${{ runner.os }}-bun-
+  deploy:
+    needs: build
 
-            - name: Install Dependencies
-              run: bun install --frozen-lockfile
+    permissions:
+      pages: write
+      id-token: write
 
-            - name: Build project
-              run: bun run check
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
-            - name: Build project
-              run: bun run build
-
-            - name: Deploy to github pages
-              if: github.ref == 'refs/heads/main'
-              uses: peaceiris/actions-gh-pages@v4
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: dist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
