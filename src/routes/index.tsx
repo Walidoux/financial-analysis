@@ -1,4 +1,4 @@
-import './app.css'
+import '../app.css'
 
 import { A } from '@solidjs/router'
 
