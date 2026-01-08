@@ -88,8 +88,9 @@ const config: Record<CalloutType, Callout> = {
     title: 'Note',
   },
   caution: {
-    icon: () => <TbAlertTriangle class='text-yellow-200' />,
-    color: 'bg-yellow-900/50 text-yellow-100',
+    icon: () => <TbAlertTriangle class='text-[#915930] dark:text-yellow-200' />,
+    color:
+      'bg-[#eab30824] dark:bg-yellow-900/50 text-black dark:text-yellow-100',
     border: 'border-l-4 border-yellow-400',
     title: 'Caution',
   },

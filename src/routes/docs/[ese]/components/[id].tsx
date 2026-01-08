@@ -2,7 +2,7 @@ import { Meta, Title } from '@solidjs/meta'
 import type { RouteSectionProps } from '@solidjs/router'
 import { allDocs } from 'content-collections'
 import { createMemo } from 'solid-js'
-import { APP_NAME } from '~/lib/store'
+import { APP } from '~/lib/store'
 import { useMDXComponents } from '~/tools/solid-mdx'
 
 const MDXComponents = useMDXComponents()
@@ -19,7 +19,7 @@ export default function PandaDocsPage(props: RouteSectionProps) {
   return (
     <>
       <Title>
-        {doc().title} | {APP_NAME.LONG}
+        {doc().title} | {APP.LONG_NAME}
       </Title>
       <Meta content={doc().description} name='description' />
       <MDXComponents.h1>{doc().title}</MDXComponents.h1>

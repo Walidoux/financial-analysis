@@ -12,7 +12,7 @@ import mdxMermaid from 'mdx-mermaid'
 import rehypeKatex from 'rehype-katex'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxEnhanced from 'remark-mdx-math-enhanced'
-import { APP_NAME } from './src/lib/store'
+import { APP } from './src/lib/store'
 
 export default defineConfig({
   ssr: true,
@@ -39,7 +39,7 @@ export default defineConfig({
     preset: 'github-pages',
     static: true,
     baseURL:
-      process.env.NODE_ENV === 'development' ? '/' : `/${APP_NAME.SHORT}`,
+      process.env.NODE_ENV === 'development' ? '/' : `/${APP.SHORT_NAME}`,
     prerender: {
       crawlLinks: true,
       autoSubfolderIndex: true,

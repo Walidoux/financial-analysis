@@ -5,7 +5,7 @@ import { Router } from '@solidjs/router'
 import { FileRoutes } from '@solidjs/start/router'
 import { type JSXElement, type ParentComponent, Suspense } from 'solid-js'
 import { Navbar } from './components/navbar'
-import { APP_NAME } from './lib/store'
+import { APP } from './lib/store'
 import { ThemeProvider } from './providers/theme-provider'
 
 const Layout: ParentComponent = (props) => {
@@ -19,12 +19,12 @@ const Layout: ParentComponent = (props) => {
 
 export default function App() {
   return (
-    <ThemeProvider defaultTheme='system' storageKey={`${APP_NAME.SHORT}-theme`}>
+    <ThemeProvider defaultTheme='system' storageKey={`${APP.SHORT_NAME}-theme`}>
       <Router
         base={import.meta.env.SERVER_BASE_URL}
         root={(props: { children: JSXElement }) => (
           <MetaProvider>
-            <Title>{APP_NAME.LONG}</Title>
+            <Title>{APP.LONG_NAME}</Title>
             <Layout>{props.children}</Layout>
           </MetaProvider>
         )}>

@@ -10,12 +10,13 @@
 - [ ] Add smart search dictionary for slugs and abbreviations
 - [ ] reimplement resizable component logic between aside html tag and the main mdx content
 - [ ] Upload xlsx/csv files in page to produce mdx code to copy and insert it to the page
-- [ ] Code custom blockquote, code can be grabbed from catalog manager of rypi-ui
 - [ ] In dev mode only, add button to go file using preferred IDE
 
 <details>
     <summary>✅ Completed tasks</summary>
 
+- [x] Add status production page to navigation bar
+- [x] Code callouts, code can be grabbed from catalog manager of rypi-ui for instance
 - [x] Fix deployement workflow after migrating to SolidStart
 - [x] Beautify scrollbar styles
 
