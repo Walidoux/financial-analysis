@@ -14,9 +14,11 @@
 - [ ] In dev mode only, add button to go file using preferred IDE
 
 <details>
-<summary>✅ Completed tasks</summary>
+    <summary>✅ Completed tasks</summary>
+
 - [x] Fix deployement workflow after migrating to SolidStart
 - [x] Beautify scrollbar styles
+
 </details>
 
 ## 📜 Content
