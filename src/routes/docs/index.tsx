@@ -1,7 +1,7 @@
 import { Meta, Title } from '@solidjs/meta'
 import type { RouteSectionProps } from '@solidjs/router'
 
-import MDXContent from '~/content/pages/introduction.mdx'
+import MDXContent from '~/content/pages/introduction/index.mdx'
 import { APP_NAME } from '~/lib/store'
 
 export default function IntroductionPage(_props: RouteSectionProps) {
