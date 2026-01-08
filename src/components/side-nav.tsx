@@ -15,7 +15,7 @@ const defaultSubSections = [
   },
 ]
 
-const internships = [
+export const internships = [
   {
     title: 'Internships',
     links: [

@@ -2,8 +2,7 @@
 
 ## 💻 UI/UX Improvements
 
-- [x] Add breadcrumbs to each subpage
-- [ ] Add doc footer pagging (next/previous) pages
+- [ ] Implement TOC
 - [ ] Add search bar to look up text matches + magic keys ctrl+k
 - [ ] Formatting issue with parsing integers - currency gets truncated
 - [ ] Typography not consistent enough
@@ -15,6 +14,8 @@
 <details>
     <summary>✅ Completed tasks</summary>
 
+- [x] Add breadcrumbs to each subpage
+- [x] Add doc footer pagination (next/previous) pages
 - [x] Add custom checkbox for mdx
 - [x] Pagination issues with routes (#how-it-works, #faq) and other subpages of categories links
 - [x] Add status production page to navigation bar
