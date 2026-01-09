@@ -40,3 +40,21 @@
 - [x] Docs can be found under "rapport de stage" in figma and anything related
 
 </details>
+
+## 📝 Code written
+
+`cloc . --exclude-dir="node_modules,.content-collections,.vinxi,.output,public"`
+
+```bash
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                      43            311             36           2588
+Markdown                        34            306              0            727
+CSS                              1             14              3            146
+JSON                             3              0              0            123
+YAML                             1              8              0             35
+-------------------------------------------------------------------------------
+SUM:                            82            639             39           3619
+-------------------------------------------------------------------------------
+```

@@ -5,18 +5,21 @@ This document provides essential information for agentic coding assistants worki
 ## 🚀 Build, Lint, and Test Commands
 
 ### Core Commands
-- **Development server**: `npm run dev` or `bun run dev`
-- **Production build**: `npm run build` or `bun run build`
-- **Start production server**: `npm run start` or `bun run start`
+
+- **Development server**: `bun run dev`
+- **Production build**: `bun run build`
+- **Start production server**: `bun run start`
 
 ### Code Quality
-- **Format code**: `npm run format` or `bun run format` (Biome formatter)
-- **Lint code**: `npm run lint` or `bun run lint` (Biome linter)
-- **Type check**: `npm run check` or `bun run check` (Biome checker)
+
+- **Format code**: `bun run format` (Biome formatter)
+- **Lint code**: `bun run lint` (Biome linter)
+- **Type check**: `bun run check` (Biome checker)
 
 ## 🎨 Code Style Guidelines
 
 ### TypeScript & JavaScript
+
 - **Strict TypeScript**: Enabled with `strict: true` in tsconfig.json
 - **Import organization**:
   1. External libraries (solid-js, @solidjs/router, etc.)
@@ -29,6 +32,7 @@ This document provides essential information for agentic coding assistants worki
 - **JSX**: `bracketSameLine: true` for cleaner formatting
 
 ### Naming Conventions
+
 - **Components**: PascalCase (e.g., `Navbar`, `ThemeSwitcher`)
 - **Functions**: camelCase (e.g., `capitalize`, `createSignal`)
 - **Variables**: camelCase (e.g., `status`, `sideNavOpen`)
@@ -37,6 +41,7 @@ This document provides essential information for agentic coding assistants worki
 - **Files**: kebab-case for components (e.g., `theme-switcher.tsx`)
 
 ### Component Patterns
+
 - **SolidJS signals**: Use `createSignal` for reactive state
 - **Effects**: Use `createEffect` for side effects
 - **Conditional rendering**: Use `<Show>` component
@@ -45,12 +50,14 @@ This document provides essential information for agentic coding assistants worki
 - **Styling**: Combine Tailwind classes with `cn()` utility
 
 ### Error Handling
+
 - **Async operations**: Use try/catch with `.catch()` for promises
 - **Network requests**: Handle errors gracefully with user feedback
 - **Validation**: TypeScript strict mode prevents most runtime errors
 - **Logging**: Use console methods appropriately (avoid in production)
 
 ### Imports & Dependencies
+
 - **Path aliases**: Use `~/*` for src directory imports
 - **External imports**: Group by category (SolidJS, UI, utilities)
 - **Type imports**: Use `import type` for TypeScript types
@@ -75,6 +82,7 @@ createEffect(() => {
 ```
 
 ### Tailwind CSS
+
 - **Custom design system**: Uses OKLCH color space with CSS custom properties
 - **Utility classes**: Prefer Tailwind utilities over custom CSS
 - **Component variants**: Use `tailwind-variants` for component styling
@@ -82,6 +90,7 @@ createEffect(() => {
 - **Dark mode**: Automatic support via CSS custom properties
 
 ### shadcn/ui Components
+
 - **Base components**: Built on @kobalte/core primitives
 - **Variants**: Use predefined variants (default, destructive, outline, etc.)
 - **Sizes**: Consistent sizing system (sm, default, lg, icon)
@@ -89,6 +98,7 @@ createEffect(() => {
 - **Accessibility**: Built-in ARIA attributes and keyboard navigation
 
 ### MDX Content
+
 - **Content collections**: Use @content-collections/core for typed content
 - **Math support**: KaTeX and remark-math for mathematical expressions
 - **Mermaid diagrams**: Integrated diagram support
@@ -115,6 +125,7 @@ src/
 ## 🔧 Configuration Files
 
 ### Biome (biome.jsonc)
+
 - Extends `ultracite/biome/core`
 - Custom rules:
   - `a11y.useFocusableInteractive`: off
@@ -123,17 +134,20 @@ src/
 - Single quotes, JSX same line brackets, semicolons as needed
 
 ### TypeScript (tsconfig.json)
+
 - Target: ESNext
 - JSX: preserve (for SolidJS)
 - Strict mode enabled
 - Path aliases: `~/*` → `./src/*`
 
 ### Tailwind (tailwind.config.ts)
+
 - Custom content paths: `src/**/*.{ts,tsx,css}`
 - tailwindcss-animate plugin
 - Minimal configuration (relies on CSS custom properties)
 
 ### shadcn/ui (components.json)
+
 - Style: base-lyra
 - Icon library: lucide
 - RSC: false (SolidJS, not React)
@@ -143,24 +157,32 @@ src/
 ## 🚀 Deployment
 
 ### GitHub Pages
+
 - Build preset: `NITRO_PRESET=github_pages`
 - Output directory: `.output/public`
 - Trigger: Push to main branch or manual dispatch
 - Uses Bun for faster builds
 
 ### Environment Variables
+
 - `SERVER_BASE_URL`: Base URL for routing
 - Development vs production handling with `process.env.NODE_ENV`
 
 ## 📋 Development Workflow
 
+### Planning and Research
+
+When planning new features or implementations, use `grep_app_searchGitHub` MCP server tools to benchmark existing implementations in GitHub public repositories. Analyze patterns, identify the most recent or relevant approaches, and adapt best practices from the community.
+
 ### Before Committing
-1. Run `npm run check` for type checking
-2. Run `npm run lint` for linting
-3. Run `npm run format` for code formatting
-4. Test build: `npm run build`
+
+1. Run `bun run check` for type checking
+2. Run `bun run lint` for linting
+3. Run `bun run format` for code formatting
+4. Test build: `bun run build`
 
 ### Component Development
+
 1. Use shadcn/ui components as base when possible
 2. Follow existing patterns for props and variants
 3. Include proper TypeScript types
@@ -168,34 +190,37 @@ src/
 5. Test responsiveness and dark mode
 
 ### Content Development
+
 1. Use MDX for rich content with math and diagrams
 2. Follow existing directory structure in `content/`
 3. Use content collections for type safety
 4. Test rendering in development mode
 
 ### State Management
+
 - Use `@tanstack/solid-store` for global state
 - Prefer local signals for component state
 - Use context providers for shared state
 - Follow reactive programming patterns
 
-## ⚠️ Important Notes
-
-- **No tests currently**: When adding tests, use Vitest with jsdom environment
-- **Git hooks**: Pre-commit hooks may run linting/formatting
-- **Performance**: Use SolidJS optimization patterns (memo, createMemo, etc.)
-- **Bundle size**: Monitor with build output and optimize imports
-- **Accessibility**: Follow WCAG guidelines, components include a11y features
-
 ## 🔍 Troubleshooting
 
 ### Common Issues
+
 - **Import errors**: Check path aliases and file extensions
 - **Type errors**: Ensure proper TypeScript types and interfaces
 - **Styling issues**: Verify Tailwind classes and custom properties
 - **Build failures**: Check Biome rules and configuration
 
 ### Debugging
+
+**IMPORTANT**: Never run `bun run dev` - there is always an open dev server running on port 3000.
+
+- Use chrome-devtools MCP tools for debugging:
+  - Get console messages with `chrome-devtools_list_console_messages`
+  - Monitor network requests with `chrome-devtools_list_network_requests`
+  - Take screenshots with `chrome-devtools_take_screenshot`
+  - Inspect page content with `chrome-devtools_take_snapshot`
 - Use SolidJS dev tools for reactive debugging
 - Check browser console for runtime errors
 - Use `console.log` strategically (remove before commit)
