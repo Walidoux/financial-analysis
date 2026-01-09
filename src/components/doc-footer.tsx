@@ -4,36 +4,41 @@ import { For } from 'solid-js'
 import { cn } from 'tailwind-variants'
 import { Separator } from './ui/separator'
 
-type DocsFooterProps = Record<
-  'previous' | 'next',
-  { title: string; content: string } & { _meta: Meta }
+type DocsFooterProps = Partial<
+  Record<
+    'previous' | 'next',
+    { title: string; content: string } & { _meta: Meta }
+  >
 >
 
 export const DocFooter = (props: DocsFooterProps) => {
+  const validKeys = Object.keys(props).filter(
+    (key) => props[key as keyof typeof props]
+  )
   return (
     <>
       <Separator class='my-4' />
       <nav
         aria-label='doc-footer-pager'
         class='flex items-center justify-between'>
-        <For each={Object.keys(props)}>
+        <For each={validKeys}>
           {(key) => {
-            const { title, _meta } = props[key as keyof typeof props]
-            return (
+            const page = props[key as keyof typeof props]
+            return page ? (
               <A
                 class={cn(
                   { 'text-right': key === 'previous' },
                   'grid rounded-md border border-[#e2e2e3] px-4 py-3 transition-colors hover:border-primary hover:bg-primary/10'
                 )}
-                href={_meta.filePath}>
+                href={page._meta.filePath}>
                 <span class='block font-medium text-[#67676c] text-xs leading-5'>
                   {key === 'next' ? 'Page suivante' : 'Page précédente'}
                 </span>
                 <span class='block font-medium text-primary text-sm leading-5 transition-colors'>
-                  {title}
+                  {page.title}
                 </span>
               </A>
-            )
+            ) : null
           }}
         </For>
       </nav>
