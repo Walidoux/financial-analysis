@@ -1,6 +1,6 @@
-import { A, useLocation } from '@solidjs/router'
+import { A, type Location } from '@solidjs/router'
 import { BsPen } from 'solid-icons/bs'
-import { For, Show } from 'solid-js'
+import { createMemo, For, Show } from 'solid-js'
 
 import {
   Breadcrumb,
@@ -12,13 +12,12 @@ import {
 import { sanitizeSlug } from '~/lib/utils'
 import { internships } from './side-nav'
 
-export const SubNav = () => {
-  const { pathname } = useLocation()
-  const segments = pathname.split('/').filter(Boolean)
+export function SubNav<T>(props: Partial<Location<T>>) {
+  const segments = props.pathname?.split('/').filter(Boolean)
 
-  segments.shift()
+  segments?.shift()
 
-  if (segments.length <= 1) {
+  if ((segments?.length as number) <= 1) {
     return null
   }
 
@@ -26,26 +25,29 @@ export const SubNav = () => {
     if (idx === 0) {
       return `/${seg}`
     }
-    return `/${segments.slice(0, idx + 1).join('/')}`
+    return `/${segments?.slice(0, idx + 1).join('/')}`
   }
 
-  const redirectSrcFile = (path: string) => {
-    const segments = path.split('/').filter(Boolean)
+  const redirectSrcFile = createMemo(() => {
+    const segments = props.pathname?.split('/').filter(Boolean)
     const IDE = 'zed://file'
     const srcDir = IDE.concat(import.meta.env.CWD).concat('/src/content')
 
-    segments.shift()
+    segments?.shift()
 
-    let docDir = segments.join('/')
+    let docDir = segments?.join('/')
 
-    if (internships[0].links.find((link) => link.href.includes(docDir))) {
-      docDir = docDir.concat('/index')
+    console.log(docDir)
+    if (
+      internships[0].links.find((link) => link.href.includes(docDir as string))
+    ) {
+      docDir = docDir?.concat('/index')
     }
 
-    docDir = docDir.replace('docs', 'pages')
+    docDir = docDir?.replace('docs', 'pages')
 
     return `${srcDir}/${docDir}.mdx`
-  }
+  })
 
   return (
     <nav class='flex flex-items justify-between'>
@@ -61,7 +63,7 @@ export const SubNav = () => {
                       {sanitizeSlug(segment)}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
-                  <Show when={segments[idx() + 1]}>
+                  <Show when={segments?.[idx() + 1]}>
                     <BreadcrumbSeparator />
                   </Show>
                 </>
@@ -71,9 +73,7 @@ export const SubNav = () => {
         </BreadcrumbList>
       </Breadcrumb>
       <Show when={process.env.NODE_ENV === 'development'}>
-        <A
-          class='inline-flex items-center gap-x-2'
-          href={redirectSrcFile(pathname)}>
+        <A class='inline-flex items-center gap-x-2' href={redirectSrcFile()}>
           <BsPen class='mb-0.5' />
           Edit File
         </A>

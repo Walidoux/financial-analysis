@@ -1,11 +1,11 @@
 import { A } from '@solidjs/router'
 import { resolvePath } from 'node_modules/@solidjs/router/dist/utils'
-import { TbBrandGithub } from 'solid-icons/tb'
+import { TbBrandGithub, TbExternalLink } from 'solid-icons/tb'
 import { createEffect, createSignal, Show } from 'solid-js'
 import { cn } from 'tailwind-variants'
 import { APP, NAV_HEIGHT } from '~/lib/store'
 import { ThemeSwitcher } from './theme-switcher'
-
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 export const Navbar = () => {
   type StatusType = 'online' | 'offline' | 'idle'
@@ -13,7 +13,7 @@ export const Navbar = () => {
   const labelsDict = {
     online: 'En ligne',
     offline: 'Hors-ligne',
-    idle: 'Inactif'
+    idle: 'Inactif',
   }
 
   createEffect(() => {
@@ -35,29 +35,54 @@ export const Navbar = () => {
         />
         <div class='inline-flex items-center'>
           <Show when={process.env.NODE_ENV === 'development'}>
-            <A
-              class='flex h-fit items-center gap-x-1.5 rounded-full bg-muted p-0.5 px-1.5 font-medium text-[10px] uppercase tracking-widest'
-              href={APP.HOME_PAGE}
-              rel='noopener noreferrer'
-              target='_blank'>
-              <span
-                class={cn('size-2 rounded-full transition-colors', {
-                  'bg-green-500': status() === 'online',
-                  'bg-gray-500': status() === 'idle',
-                  'bg-red-500': status() === 'offline',
-                })}
-              />
-              {labelsDict[status()]}
-            </A>
+            <Tooltip>
+              <TooltipTrigger>
+                <A
+                  class='flex h-fit items-center gap-x-1.5 rounded-full bg-muted p-0.5 px-1.5 font-medium text-[10px] uppercase tracking-widest'
+                  href={APP.HOME_PAGE}
+                  rel='noopener noreferrer'
+                  target='_blank'>
+                  <span
+                    class={cn('size-2 rounded-full transition-colors', {
+                      'bg-green-500': status() === 'online',
+                      'bg-gray-500': status() === 'idle',
+                      'bg-red-500': status() === 'offline',
+                    })}
+                  />
+                  {labelsDict[status()]}
+                </A>
+              </TooltipTrigger>
+              <TooltipContent class='inline-flex gap-x-2'>
+                <TbExternalLink size={14} />
+                Site production
+              </TooltipContent>
+            </Tooltip>
           </Show>
-          <A
-            class='grid size-10 place-items-center'
-            href={APP.GITHUB_URL}
-            rel='noopener noreferrer'
-            target='_blank'>
-            <TbBrandGithub />
-          </A>
-          <ThemeSwitcher />
+
+          <Tooltip>
+            <TooltipTrigger>
+              <A
+                class='grid size-10 place-items-center'
+                href={APP.GITHUB_URL}
+                rel='noopener noreferrer'
+                target='_blank'>
+                <TbBrandGithub />
+              </A>
+            </TooltipTrigger>
+            <TooltipContent class='inline-flex gap-x-2'>
+              <TbExternalLink size={14} />
+              Consulter le code source
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger>
+              <ThemeSwitcher />
+            </TooltipTrigger>
+            <TooltipContent class='inline-flex gap-x-2'>
+              Changer le thème
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
     </nav>

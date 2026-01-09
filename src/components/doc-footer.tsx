@@ -20,7 +20,9 @@ export const DocFooter = (props: DocsFooterProps) => {
       <Separator class='my-4' />
       <nav
         aria-label='doc-footer-pager'
-        class='flex items-center justify-between'>
+        class={cn('flex items-center justify-between', {
+          'justify-end': validKeys.length === 1,
+        })}>
         <For each={validKeys}>
           {(key) => {
             const page = props[key as keyof typeof props]

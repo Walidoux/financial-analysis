@@ -1,4 +1,4 @@
-import type { RouteSectionProps } from '@solidjs/router'
+import { type RouteSectionProps, useLocation } from '@solidjs/router'
 import { allPages } from 'content-collections'
 import { type Component, createEffect, createSignal } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
@@ -10,6 +10,8 @@ import NotFound from '~/routes/[...404]'
 
 export default function Subpage(props: RouteSectionProps) {
   const [MDXComp, setMDXComp] = createSignal<Component>()
+  const { pathname } = useLocation()
+
   const currentPage = allPages.find(
     (page) => page.title.toLowerCase() === props.params.subpage
   )
@@ -26,7 +28,7 @@ export default function Subpage(props: RouteSectionProps) {
   return (
     <>
       <Metadata title={props.params.subpage as string} />
-      <SubNav />
+      <SubNav pathname={pathname} />
       <Dynamic component={MDXComp()} />
       <DocFooter
         next={allPages[currentIdx + 1]}
