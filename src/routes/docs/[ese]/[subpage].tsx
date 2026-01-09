@@ -29,7 +29,9 @@ export default function Subpage(props: RouteSectionProps) {
     <>
       <Metadata title={props.params.subpage as string} />
       <SubNav pathname={pathname} />
-      <Dynamic component={MDXComp()} />
+      <main class='p-6'>
+        <Dynamic component={MDXComp()} />
+      </main>
       <DocFooter
         next={allPages[currentIdx + 1]}
         previous={allPages[currentIdx - 1]}

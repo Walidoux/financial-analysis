@@ -132,7 +132,7 @@ export const ToastContent = (props: ComponentProps<'div'>) => {
 
   return (
     <div class={cn('flex w-full flex-col', local.class)} {...rest}>
-      <div class='grid grid-cols-[25px_1fr] grid-rows-2 gap-x-3'>
+      <div class='grid grid-cols-[25px_1fr] grid-rows-2 gap-x-3 text-foreground'>
         {local.children}
       </div>
       <ToastPrimitive.CloseButton class='absolute top-1 right-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50'>

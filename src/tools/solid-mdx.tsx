@@ -8,6 +8,7 @@ import { type Component, createSignal } from 'solid-js'
 import { cn } from 'tailwind-variants'
 
 import { Callout } from '~/components/callout'
+import { DataTable } from '~/components/data-table'
 import { RawTable } from '~/components/raw-table'
 import { CheckboxControl } from '~/components/ui/checkbox'
 import { Separator } from '~/components/ui/separator'
@@ -17,6 +18,7 @@ import { createSlug, generateFaviconUrl } from '~/lib/utils'
 // biome-ignore lint/suspicious/noExplicitAny: different components have different props
 export const useMDXComponents: () => Record<string, Component<any>> = () => ({
   Callout,
+  DataTable,
 
   h1(props) {
     return (

@@ -4,6 +4,7 @@ import { TbBrandGithub, TbExternalLink } from 'solid-icons/tb'
 import { createEffect, createSignal, Show } from 'solid-js'
 import { cn } from 'tailwind-variants'
 import { APP, NAV_HEIGHT } from '~/lib/store'
+import CommandMenu from './search'
 import { ThemeSwitcher } from './theme-switcher'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
@@ -34,11 +35,15 @@ export const Navbar = () => {
           width={50}
         />
         <div class='inline-flex items-center'>
+          <CommandMenu />
+
+          <span class='mx-2 my-2 min-h-[-webkit-fill-available] w-px bg-border' />
+
           <Show when={process.env.NODE_ENV === 'development'}>
             <Tooltip>
               <TooltipTrigger>
                 <A
-                  class='flex h-fit items-center gap-x-1.5 rounded-full bg-muted p-0.5 px-1.5 font-medium text-[10px] uppercase tracking-widest'
+                  class='mx-2 flex h-fit items-center gap-x-1.5 rounded-full bg-muted p-0.5 px-1.5 font-medium text-[10px] uppercase tracking-widest'
                   href={APP.HOME_PAGE}
                   rel='noopener noreferrer'
                   target='_blank'>
@@ -58,6 +63,8 @@ export const Navbar = () => {
               </TooltipContent>
             </Tooltip>
           </Show>
+
+          <span class='mx-2 my-2 min-h-[-webkit-fill-available] w-px bg-border' />
 
           <Tooltip>
             <TooltipTrigger>

@@ -40,22 +40,24 @@ export default function EsePage(props: RouteSectionProps) {
     <>
       <Metadata title={props.params.ese as string} />
       <SubNav pathname={pathname} />
-      <Dynamic component={MDXComp()} />
-      <ul class='mt-6 grid grid-cols-3 gap-3'>
-        <For each={subPages()}>
-          {(page) => (
-            <Card class='min-h-12'>
-              <CardContent class='flex h-full items-center p-0'>
-                <A
-                  class='w-full px-4 py-2'
-                  href={`/docs/${props.params.ese}/${page.slug}`}>
-                  {page.title}
-                </A>
-              </CardContent>
-            </Card>
-          )}
-        </For>
-      </ul>
+      <main class='mt-6 overflow-y-auto'>
+        <Dynamic component={MDXComp()} />
+        <ul class='mt-6 grid grid-cols-3 gap-3'>
+          <For each={subPages()}>
+            {(page) => (
+              <Card class='min-h-12'>
+                <CardContent class='flex h-full items-center p-0'>
+                  <A
+                    class='w-full px-4 py-2'
+                    href={`/docs/${props.params.ese}/${page.slug}`}>
+                    {page.title}
+                  </A>
+                </CardContent>
+              </Card>
+            )}
+          </For>
+        </ul>
+      </main>
     </>
   )
 }

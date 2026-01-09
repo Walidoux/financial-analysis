@@ -8,6 +8,7 @@
 - [ ] Typography not consistent enough
 - [ ] Add smart search dictionary for slugs and abbreviations
 - [ ] Upload xlsx/csv files in page to produce mdx code to copy and insert it to the page
+- [ ] Add DataTable component
 
 <details>
     <summary>✅ Completed tasks</summary>

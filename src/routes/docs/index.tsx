@@ -24,9 +24,11 @@ export default function IntroductionPage(_props: RouteSectionProps) {
         class='grid grid-cols-[225px_1fr]'
         style={{ height: `calc(100vh - ${NAV_HEIGHT}px)` }}>
         <SideNav />
-        <section class='overflow-y-auto p-6'>
+        <section class='flex flex-col justify-between p-6'>
           <SubNav pathname={pathname} />
-          <MDXContent />
+          <main class='h-full overflow-y-auto'>
+            <MDXContent />
+          </main>
           <DocFooter
             next={allPages[currentIdx + 1]}
             previous={allPages[currentIdx - 1]}
