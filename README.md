@@ -3,16 +3,16 @@
 ## 💻 UI/UX Improvements
 
 - [ ] Implement TOC
-- [ ] Add search bar to look up text matches + magic keys ctrl+k
 - [ ] Formatting issue with parsing integers - currency gets truncated
 - [ ] Typography not consistent enough
 - [ ] Add smart search dictionary for slugs and abbreviations
 - [ ] Upload xlsx/csv files in page to produce mdx code to copy and insert it to the page
-- [ ] Add DataTable component
 
 <details>
     <summary>✅ Completed tasks</summary>
 
+- [x] Add search bar to look up text matches + magic keys ctrl+k
+- [x] Add DataTable component
 - [x] In dev mode only, add button to go file using preferred IDE
 - [x] Add breadcrumbs to each subpage
 - [x] Add doc footer pagination (next/previous) pages
@@ -50,12 +50,12 @@
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-TypeScript                      43            311             36           2588
-Markdown                        34            306              0            727
-CSS                              1             14              3            146
-JSON                             3              0              0            123
+TypeScript                      60            506             45           5028
+Markdown                        36            379              0            980
+CSS                              1             21              3            146
+JSON                             3              0              0            127
 YAML                             1              8              0             35
 -------------------------------------------------------------------------------
-SUM:                            82            639             39           3619
+SUM:                           101            914             48           6316
 -------------------------------------------------------------------------------
 ```
