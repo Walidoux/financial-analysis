@@ -4,6 +4,7 @@ import { MetaProvider } from '@solidjs/meta'
 import { Router } from '@solidjs/router'
 import { FileRoutes } from '@solidjs/start/router'
 import { type JSXElement, type ParentComponent, Suspense } from 'solid-js'
+import { Metadata } from './components/metadata'
 import { Navbar } from './components/navbar'
 import { APP } from './lib/store'
 import { ThemeProvider } from './providers/theme-provider'
@@ -24,6 +25,7 @@ export default function App() {
         base={import.meta.env.SERVER_BASE_URL}
         root={(props: { children: JSXElement }) => (
           <MetaProvider>
+            <Metadata title='Site' />
             <Layout>{props.children}</Layout>
           </MetaProvider>
         )}>

@@ -1,4 +1,4 @@
-import { Meta, MetaProvider, Title } from '@solidjs/meta'
+import { Meta, Title } from '@solidjs/meta'
 
 import { APP } from '../lib/store'
 
@@ -9,7 +9,7 @@ interface MetadataProps {
 
 export const Metadata = (props: MetadataProps) => {
   return (
-    <MetaProvider>
+    <>
       <Title>
         {props.title} | {APP.LONG_NAME}
       </Title>
@@ -27,6 +27,6 @@ export const Metadata = (props: MetadataProps) => {
       <Meta content='GitHub' property='og:site_name' />
 
       <link href='/favicon.ico' rel='icon' />
-    </MetaProvider>
+    </>
   )
 }
