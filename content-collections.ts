@@ -17,7 +17,7 @@ const docs = defineCollection({
   schema: (z) => ({
     title: z.string(),
     description: z.string(),
-    category: z.enum(categoriesKeys),
+    category: z.enum(categoriesKeys).optional(),
   }),
 })
 

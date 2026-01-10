@@ -32,7 +32,6 @@ export const APP = {
 
 export const categoryMap: Record<string, string> = {
   calculs: 'Calculs',
-  generalites: 'Généralités',
   ressources: 'Ressources',
   cours: 'Cours Académiques',
   research: 'Recherches',

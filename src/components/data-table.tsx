@@ -101,24 +101,22 @@ export const DataTable = <TData, TValue>(props: Props<TData, TValue>) => {
                     <For each={row.getVisibleCells()}>
                       {(cell) => (
                         <TableCell>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )
-                            ?.toString()
-                            .includes('No')
-                            ? '❌'
-                            : flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext()
-                                )
-                                  ?.toString()
-                                  .includes('Yes')
-                              ? '✅'
-                              : flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext()
-                                )}
+                          {(() => {
+                            const cellContent = flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )?.toString()
+                            if (cellContent?.includes('No')) {
+                              return '❌'
+                            }
+                            if (cellContent?.includes('Yes')) {
+                              return '✅'
+                            }
+                            return flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )
+                          })()}
                         </TableCell>
                       )}
                     </For>

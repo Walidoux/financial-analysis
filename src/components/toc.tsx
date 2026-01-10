@@ -9,7 +9,9 @@ const Toc = (props: {
   const [activeItem, setActiveItem] = createSignal<string[]>([])
 
   createEffect(() => {
-    if (isServer) return
+    if (isServer) {
+      return
+    }
 
     const newTargets = props.data
       .map((item) => document.getElementById(item.slug))
@@ -18,7 +20,9 @@ const Toc = (props: {
   })
 
   createIntersectionObserver(targets, (entries) => {
-    if (isServer) return
+    if (isServer) {
+      return
+    }
 
     for (const entry of entries) {
       const id = entry.target.getAttribute('id')
@@ -38,7 +42,7 @@ const Toc = (props: {
   })
 
   return (
-    <aside class='sticky top-0 left-0 z-10 border-l p-6 h-full flex flex-col gap-2'>
+    <aside class='sticky row-span-2 top-0 left-0 z-10 flex h-full flex-col gap-2 border-l p-6'>
       <p class='h-6 bg-background text-muted-foreground text-xs'>
         Sur cette page
       </p>

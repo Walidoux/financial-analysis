@@ -5,6 +5,7 @@ import { TbCircleCheck } from 'solid-icons/tb'
 import { createMemo, For, Show } from 'solid-js'
 import {
   Breadcrumb,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
@@ -24,11 +25,13 @@ export function SubNav<T>(props: Partial<Location<T>>) {
     return null
   }
 
+  const safeSegments = segments as string[]
+
   const constructSegment = (seg: string, idx: number) => {
     if (idx === 0) {
       return `/${seg}`
     }
-    return `/${segments?.slice(0, idx + 1).join('/')}`
+    return `/${safeSegments.slice(0, idx + 1).join('/')}`
   }
 
   const redirectSrcFile = createMemo(() => {
@@ -49,7 +52,7 @@ export function SubNav<T>(props: Partial<Location<T>>) {
     return `${srcDir}/${docDir}.mdx`
   })
 
-  const showToastRedirection = () => {
+  const _showToastRedirection = () => {
     toaster.show((props) => (
       <Toast toastId={props.toastId}>
         <ToastContent>
@@ -67,27 +70,46 @@ export function SubNav<T>(props: Partial<Location<T>>) {
     <nav class='sticky top-0 col-span-2 flex items-center justify-between border-b p-4 px-6 backdrop-blur-md'>
       <Breadcrumb>
         <BreadcrumbList>
-          <For each={segments}>
-            {(segment, idx) => {
-              return (
-                <>
-                  {/* TODO: if pathname has more than 5 segments add <BreadcrumbEllipsis /> at pos 1 of array index */}
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href={constructSegment(segment, idx())}>
-                      {sanitizeSlug(segment)}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <Show when={segments?.[idx() + 1]}>
-                    <BreadcrumbSeparator />
-                  </Show>
-                </>
-              )
-            }}
-          </For>
+          <Show
+            when={safeSegments.length > 5}
+            fallback={
+              <For each={safeSegments}>
+                {(segment, idx) => (
+                  <>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href={constructSegment(segment, idx())}>
+                        {sanitizeSlug(segment)}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <Show when={safeSegments[idx() + 1]}>
+                      <BreadcrumbSeparator />
+                    </Show>
+                  </>
+                )}
+              </For>
+            }>
+            <BreadcrumbItem>
+              <BreadcrumbLink href={constructSegment(safeSegments[0], 0)}>
+                {sanitizeSlug(safeSegments[0])}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbEllipsis />
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href={constructSegment(
+                  safeSegments.at(-1),
+                  safeSegments.length - 1
+                )}>
+                {sanitizeSlug(safeSegments.at(-1))}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Show>
         </BreadcrumbList>
       </Breadcrumb>
       <Show when={process.env.NODE_ENV === 'development'}>
-        <Button onClick={showToastRedirection} variant='outline'>
+        <Button onClick={_showToastRedirection} variant='outline'>
           <A class='inline-flex items-center gap-x-2' href={redirectSrcFile()}>
             <BsPen />
             Modifier

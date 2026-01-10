@@ -44,20 +44,25 @@ export const SideNav: Component<{ ese?: string }> = (props) => {
     ...defaultSubSections,
     ...internships,
     ...Object.entries(
-      allDocs.reduce(
-        (acc: Record<string, { title: string; href: string }[]>, doc) => {
-          const category = doc.category
-          if (!acc[category]) {
-            acc[category] = []
-          }
-          acc[category].push({
-            title: doc.title,
-            href: `/docs/${doc._meta.path}`,
-          })
-          return acc
-        },
-        {}
-      )
+      allDocs
+        .filter(
+          (doc) => !['', 'how-this-works', 'faq'].includes(doc._meta.path)
+        )
+        .reduce(
+          (acc: Record<string, { title: string; href: string }[]>, doc) => {
+            const category = doc.category
+            if (!category) return acc
+            if (!acc[category]) {
+              acc[category] = []
+            }
+            acc[category].push({
+              title: doc.title,
+              href: `/docs/${doc._meta.path}`,
+            })
+            return acc
+          },
+          {}
+        )
     )
       .sort()
       .map(([category, links]) => ({
