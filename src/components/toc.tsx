@@ -1,21 +1,25 @@
 import { createIntersectionObserver } from '@solid-primitives/intersection-observer'
 import { createEffect, createSignal, For } from 'solid-js'
+import { isServer } from 'solid-js/web'
 
 const Toc = (props: {
   data: { depth: number; slug: string; text: string }[]
 }) => {
   const [targets, setTargets] = createSignal<Element[]>([])
+  const [activeItem, setActiveItem] = createSignal<string[]>([])
 
   createEffect(() => {
+    if (isServer) return
+
     const newTargets = props.data
       .map((item) => document.getElementById(item.slug))
       .filter((el) => el !== null) as Element[]
     setTargets(newTargets)
   })
 
-  const [activeItem, setActiveItem] = createSignal<string[]>([])
-
   createIntersectionObserver(targets, (entries) => {
+    if (isServer) return
+
     for (const entry of entries) {
       const id = entry.target.getAttribute('id')
       if (id === null) {
@@ -34,7 +38,7 @@ const Toc = (props: {
   })
 
   return (
-    <aside class='sticky top-0 left-0 z-10 mt-10 flex flex-col gap-2 bg-background p-4 pt-0'>
+    <aside class='sticky top-0 left-0 z-10 border-l p-6 h-full flex flex-col gap-2'>
       <p class='h-6 bg-background text-muted-foreground text-xs'>
         Sur cette page
       </p>

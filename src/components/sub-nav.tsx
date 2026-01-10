@@ -34,7 +34,7 @@ export function SubNav<T>(props: Partial<Location<T>>) {
   const redirectSrcFile = createMemo(() => {
     const segments = props.pathname?.split('/').filter(Boolean)
     const IDE = 'zed://file'
-    const srcDir = IDE.concat(import.meta.env.CWD).concat('/src/content')
+    const srcDir = IDE.concat(import.meta.env.CWD).concat('/src/docs')
 
     segments?.shift()
 
@@ -45,8 +45,6 @@ export function SubNav<T>(props: Partial<Location<T>>) {
     ) {
       docDir = docDir?.concat('/index')
     }
-
-    docDir = docDir?.replace('docs', 'pages')
 
     return `${srcDir}/${docDir}.mdx`
   })

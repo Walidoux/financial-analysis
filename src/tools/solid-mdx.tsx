@@ -3,7 +3,8 @@ import 'katex/dist/katex.css'
 
 import { Checkbox } from '@kobalte/core/checkbox'
 import { A } from '@solidjs/router'
-import { VisLeafletFlowMap, VisLeafletMap, VisTopoJSONMap } from '@unovis/solid'
+// Temporarily disabled due to compatibility issues with solid-js v1.9+
+// import { VisLeafletFlowMap, VisLeafletMap, VisTopoJSONMap } from '@unovis/solid'
 import katex from 'katex'
 import { type Component, createSignal } from 'solid-js'
 import { cn } from 'tailwind-variants'
@@ -27,9 +28,6 @@ export const useMDXComponents: () => Record<string, Component<any>> = () => ({
 
   BarChart,
   LineChart,
-  VisLeafletMap,
-  VisLeafletFlowMap,
-  VisTopoJSONMap,
 
   h1(props) {
     return (

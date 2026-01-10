@@ -3,8 +3,8 @@ import { categoriesKeys } from '~/lib/store'
 
 const pages = defineCollection({
   name: 'pages',
-  directory: 'src/content/pages',
-  include: '**/*.mdx',
+  directory: 'src/docs',
+  include: '*/**/*.mdx',
   schema: (z) => ({
     title: z.string(),
   }),
@@ -12,8 +12,8 @@ const pages = defineCollection({
 
 const docs = defineCollection({
   name: 'docs',
-  directory: 'src/content/docs',
-  include: '**/*.mdx',
+  directory: 'src/docs',
+  include: '*.mdx',
   schema: (z) => ({
     title: z.string(),
     description: z.string(),

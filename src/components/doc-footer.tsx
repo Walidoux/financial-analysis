@@ -19,7 +19,7 @@ export const DocFooter = (props: DocsFooterProps) => {
     <nav
       aria-label='doc-footer-pager'
       class={cn(
-        'sticky bottom-0 grid grid-cols-2 border-border border-t bg-background/50 p-4 backdrop-blur-sm'
+        'sticky bottom-0 grid row-start-2 col-start-1 col-span-2 grid-cols-2 border-border border-t bg-background/50 p-4 backdrop-blur-sm'
       )}>
       <For each={validKeys.reverse()}>
         {(key) => {
