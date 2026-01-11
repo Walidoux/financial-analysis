@@ -103,6 +103,21 @@ createEffect(() => {
 - **Math support**: KaTeX and remark-math for mathematical expressions
 - **Mermaid diagrams**: Integrated diagram support
 - **Custom components**: Extend with SolidJS components in MDX
+- **JSX expressions**: Dynamic evaluation of {APP.PROPERTY_NAME} expressions in content (e.g., {APP.LONG_NAME} → "Fintech Academy")
+- **Build-time heading extraction**: Automatic TOC generation with proper slug creation and JSX expression evaluation
+- **Reactive TOC**: Table of Contents updates dynamically during client-side navigation
+
+### SEO Implementation
+
+- **Comprehensive SEO Suite**: Full implementation including meta tags, Open Graph, Twitter Cards, structured data, and technical SEO
+- **Dynamic Meta Tags**: Page-specific titles, descriptions, and metadata from MDX frontmatter
+- **Open Graph & Twitter Cards**: Social sharing optimization with proper images and metadata
+- **Structured Data**: JSON-LD Article schema for documentation pages
+- **Canonical URLs**: Automatic canonical URL generation for all pages
+- **XML Sitemap**: Auto-generated sitemap.xml with all documentation routes
+- **Robots.txt**: Proper crawler directives with sitemap reference
+- **Reactive SEO**: Updates metadata during client-side navigation
+- **API Routes**: `/api/sitemap.xml` and `/api/robots.txt` for dynamic SEO files
 
 ## 📁 Project Structure
 
@@ -115,10 +130,16 @@ src/
 ├── app.css                # Main stylesheet
 ├── components/            # Reusable components
 │   ├── ui/               # shadcn/ui components
+│   ├── metadata.tsx      # Comprehensive SEO component
 │   └── *.tsx             # Custom components
 ├── routes/               # File-based routing
+│   ├── api/              # SEO API routes
+│   │   ├── robots.txt.ts # Robots.txt generation
+│   │   └── sitemap.xml.ts # XML sitemap generation
+│   └── docs/[...path].tsx # Dynamic MDX route with SEO
 ├── docs/                 # MDX content files
 ├── lib/                  # Utilities and stores
+│   └── store.ts          # APP constants for JSX evaluation
 └── providers/            # Context providers
 ```
 
@@ -167,6 +188,14 @@ src/
 
 - `SERVER_BASE_URL`: Base URL for routing
 - Development vs production handling with `process.env.NODE_ENV`
+
+### Build-Time Optimizations
+
+- **Content Collections**: Type-safe MDX processing with heading extraction and JSX evaluation
+- **SEO Generation**: Automatic sitemap.xml and robots.txt generation
+- **TOC Integration**: Build-time heading extraction with reactive client-side updates
+- **JSX Expression Evaluation**: Dynamic content processing for APP constants in MDX
+- **Content Collections Transform**: Automatic metadata extraction from MDX frontmatter and headings
 
 ## 📋 Development Workflow
 
@@ -358,7 +387,7 @@ The local server URL is `http://localhost:3000/fintech-academy`, where `fintech-
 - [Overview](https://docs.solidjs.com/solid-start/)
 - [Getting started](https://docs.solidjs.com/solid-start/getting-started)
 - [Routing](https://docs.solidjs.com/solid-start/building-your-application/routing)
-- [API routes](https://docs.solidjs.com/solid-start/building-your-application/api-routes)
+- [API routes](https://docs.solidjs.com/solid-start/building-your-application/api-routes) - Used for dynamic SEO file generation (sitemap.xml, robots.txt)
 - [CSS and styling](https://docs.solidjs.com/solid-start/building-your-application/css-and-styling)
 - [Data fetching](https://docs.solidjs.com/solid-start/building-your-application/data-fetching)
 - [Data mutation](https://docs.solidjs.com/solid-start/building-your-application/data-mutation)
@@ -460,5 +489,5 @@ The local server URL is `http://localhost:3000/fintech-academy`, where `fintech-
 
 ---
 
-*This document should be updated as the project evolves. Last updated: January 2026 (docs structure migration)*</content>
+*This document should be updated as the project evolves. Last updated: January 2026 (comprehensive SEO implementation)*</content>
 <parameter name="filePath">/home/studio/Projects/fintech-academy/AGENTS.md
