@@ -28,6 +28,8 @@ export const APP = {
   HOME_PAGE: pkg.homepage,
   SHORT_NAME: pkg.name,
   LONG_NAME: sanitizeSlug(pkg.name),
+  AUTHOR: pkg.author.name,
+  OG_IMAGE_URL: `${pkg.homepage}/og-image.jpg`,
 }
 
 export const categoryMap: Record<string, string> = {
