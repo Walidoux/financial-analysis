@@ -51,7 +51,9 @@ export const SideNav: Component<{ ese?: string }> = (props) => {
         .reduce(
           (acc: Record<string, { title: string; href: string }[]>, doc) => {
             const category = doc.category
-            if (!category) return acc
+            if (!category) {
+              return acc
+            }
             if (!acc[category]) {
               acc[category] = []
             }

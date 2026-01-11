@@ -71,7 +71,6 @@ export function SubNav<T>(props: Partial<Location<T>>) {
       <Breadcrumb>
         <BreadcrumbList>
           <Show
-            when={safeSegments.length > 5}
             fallback={
               <For each={safeSegments}>
                 {(segment, idx) => (
@@ -87,7 +86,8 @@ export function SubNav<T>(props: Partial<Location<T>>) {
                   </>
                 )}
               </For>
-            }>
+            }
+            when={safeSegments.length > 5}>
             <BreadcrumbItem>
               <BreadcrumbLink href={constructSegment(safeSegments[0], 0)}>
                 {sanitizeSlug(safeSegments[0])}
@@ -99,10 +99,12 @@ export function SubNav<T>(props: Partial<Location<T>>) {
             <BreadcrumbItem>
               <BreadcrumbLink
                 href={constructSegment(
-                  safeSegments.at(-1),
+                  // biome-ignore lint/style/noNonNullAssertion: safeSegments is guaranteed to be non-empty
+                  safeSegments.at(-1)!,
                   safeSegments.length - 1
                 )}>
-                {sanitizeSlug(safeSegments.at(-1))}
+                {/* biome-ignore lint/style/noNonNullAssertion: safeSegments is guaranteed to be non-empty */}
+                {sanitizeSlug(safeSegments.at(-1)!)}
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Show>
